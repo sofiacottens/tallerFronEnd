@@ -7,7 +7,7 @@ function LoginForm() {
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
-  }
+  } 
 
   function handlePasswordChange(event) {
     setPassword(event.target.value);
