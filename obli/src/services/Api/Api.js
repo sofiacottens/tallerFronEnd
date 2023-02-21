@@ -22,7 +22,7 @@ const login = async (username, pass) => {
   }
 };
 
-const registro = async (username, pass, departamento, ciudad) => {
+const Registro = async (username, pass, departamento, ciudad) => {
   const response = await fetch(`${BASE_URL}/usuarios.php`, {
     method: 'POST',
     headers: {
@@ -46,12 +46,11 @@ const registro = async (username, pass, departamento, ciudad) => {
   }
 };
 
-const departamento = async (auth) => {
+const departamento = async () => {
   const response = await fetch(`${BASE_URL}/departamentos.php`, {
     method: 'GET',
     headers: {
       'Content-type': 'application/json',
-      Authorization: auth,
     },
     
   });
@@ -66,12 +65,11 @@ const departamento = async (auth) => {
   }
 };
 
-const ciudad = async (auth, idDepartamento) => {
+const ciudad = async (idDepartamento) => {
   const response = await fetch(`${BASE_URL}/ciudades.php?idDepartamento=${idDepartamento}`, {
     method: 'GET',
     headers: {
       'Content-type': 'application/json',
-      Authorization: auth,
     },
     
   });
@@ -86,4 +84,4 @@ const ciudad = async (auth, idDepartamento) => {
   }
 };
 
-export { registro , login, departamento, ciudad};
+export { Registro , login, departamento, ciudad};
