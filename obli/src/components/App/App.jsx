@@ -1,18 +1,25 @@
 import './App.css';
-import '../Login/Login'
+import '../Login/Login';
 import LoginForm from '../Login/Login';
-import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/css/bootstrap.min.css";
+//import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import React from 'react';
+import {BrowserRouter as Router, Routes, Route, useRoutes} from "react-router-dom";
 
-
-
-function App() {
-  return (
-      <>
-        <div className="App">
-          <LoginForm></LoginForm>
-        </div>
-      </>
-  );
+const AppInterna = () => {
+  let routes = useRoutes([
+    {path : '/', element : <LoginForm />},
+    {path : '/login', element : <LoginForm />}
+  ]);
+  return routes;
 }
 
-export default App;
+const App = () => {
+  return (
+    <Router>
+      <AppInterna />
+    </Router>
+  );
+};
+
+export default App

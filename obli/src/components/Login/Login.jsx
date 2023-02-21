@@ -1,72 +1,115 @@
-import React, { useState } from 'react';
+import { useRef, useState } from 'react'
 import './Login.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { setLoginUser } from '../../app/slices/userSlice.js';
+import { login } from '../../services/Api/Login.js';
 
-function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const LoginForm = () => {
+  const [error, setError] = useState(false)
+  const [btnDisabled, setBtnDisable] = useState(true)
 
-  function handleEmailChange(event) {
-    setEmail(event.target.value);
-  } 
+  const inputUsername = useRef()
+  const inputPass = useRef()
+  const dispatch = useDispatch()
+  const navigator = useNavigate()
 
-  function handlePasswordChange(event) {
-    setPassword(event.target.value);
+  const user = useSelector(state => state.user.loggedUser)
+  if (user) {
+    return <Navigate to='/dashboard' replace={true} />
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    // Here you can add the logic to handle the form submission,
-    // for example by making an API request to check the user's credentials.
-    console.log(`Email: ${email}, Password: ${password}`);
+  const showError = () => {
+    setError(true)
+    setTimeout(() => {
+      setError(false)
+    }, 2000)
+  }
+
+  const validateForm = () => {
+    const userName = inputUsername.current.value
+    const pass = inputPass.current.value
+    if (userName !== '' && pass !== '') {
+      setBtnDisable(false)
+    } else {
+      setBtnDisable(true)
+    }
+  }
+
+  const onSignInClick = () => {
+    const userName = inputUsername.current.value
+    const pass = inputPass.current.value
+
+    if (userName !== '' && pass !== '') {
+      setBtnDisable(true)
+      login(userName, pass)
+        .then(data => {
+          // Disparo la action asociada al login del usuario desde redux
+          dispatch(
+            setLoginUser({
+              id: data.id,
+              apiKey: data.apiKey
+            })
+          )
+          navigator('/dashboard')
+        })
+        .catch(e => {
+          showError()
+        })
+    } else {
+      showError()
+    }
   }
 
   return (
-  <section className="vh-100 gradient-custom">
-      <form onSubmit={handleSubmit}>
-        <div className="container py-5 h-100">
-          <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div className="card bg-dark text-white">
-                <div className="card-body p-5 text-center">
-
-                  <div className="mb-md-5 mt-md-4 pb-5">
-
-                    <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
-                    <p className="text-white-50 mb-5">Ingrese su usuario y contraseña</p>
-
-                    <div className="form-outline form-white mb-4">
-                      <input type="email" value={email} onChange={handleEmailChange} className="form-control form-control-lg" />
-                      <label className="form-label" id="typeEmailX">Usuario</label>
-                    </div>
-
-                    <div className="form-outline form-white mb-4">
-                      <input type="password" id="typePasswordX" className="form-control form-control-lg" />
-                      <label type="password" value={password} onChange={handlePasswordChange}>Contraseña</label>
-                    </div>
-
-                    <button className="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
-
-                    <div className="d-flex justify-content-center text-center mt-4 pt-1">
-                      <a href="#!" className="text-white"><i className="fab fa-facebook-f fa-lg"></i></a>
-                      <a href="#!" className="text-white"><i className="fab fa-twitter fa-lg mx-4 px-2"></i></a>
-                      <a href="#!" className="text-white"><i className="fab fa-google fa-lg"></i></a>
-                    </div>
-
-                  </div>
-
-                  <div>
-                    <p className="mb-0">No tienes cuenta? <a href="#!" className="text-white-50 fw-bold">Registrarse</a>
-                    </p>
-                  </div>
-
-                </div>
-              </div>
-            </div>
+    <>
+      <section className='d-flex flex-md justify-content-center login'>
+        <div className='card'>
+          <h2>Login</h2>
+          <br />
+          <div class='form-group'>
+            <label>Username:</label>
+            <br />
+            <input
+              className='form-control'
+              type='text'
+              placeholder='User name'
+              ref={inputUsername}
+              onChange={validateForm}
+            />
           </div>
+          <div className='form-group'>
+            <label>Password:</label>
+            <br />
+            <input
+              className='form-control'
+              type='password'
+              placeholder='Password'
+              ref={inputPass}
+              onChange={validateForm}
+            />
+          </div>
+          <div className='form-group'>
+            <button
+              className='btn btn-primary'
+              onClick={onSignInClick}
+              disabled={btnDisabled}
+            >
+              Sign in
+            </button>
+          </div>
+
+          {error ? (
+            <div className='alert alert-danger' role='alert'>
+              Ha ocurrido un error!
+            </div>
+          ) : (
+            ''
+          )}
         </div>
-      </form>  
-    </section>
-  );
+      </section>
+    </>
+  )
 }
 
-export default LoginForm;
+export default LoginForm
