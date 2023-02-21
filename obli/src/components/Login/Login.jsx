@@ -3,7 +3,7 @@ import './Login.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { setLoginUser } from '../../app/slices/userSlice.js';
-import { login } from '../../services/Api/Login.js';
+import { login } from '../../services/Api/Api';
 
 const LoginForm = () => {
   const [error, setError] = useState(false)

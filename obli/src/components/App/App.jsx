@@ -1,7 +1,7 @@
 import './App.css';
 import '../Login/Login';
 import LoginForm from '../Login/Login';
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-css-onlys"
 //import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import React from 'react';
 import {BrowserRouter as Router, Routes, Route, useRoutes} from "react-router-dom";
