@@ -3,7 +3,7 @@ import './Login.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { setLoginUser } from '../../app/slices/userSlice.js';
-import { login } from '../../services/Api/Login.js';
+import { login } from '../../services/Api/Api';
 
 const LoginForm = () => {
   const [error, setError] = useState(false)
@@ -62,11 +62,9 @@ const LoginForm = () => {
   }
 
   return (
-    <>
-      <section className='d-flex flex-md justify-content-center login'>
-        <div className='card'>
-          <h2>Login</h2>
-          <br />
+    
+ 
+      <form>
           <div class='form-group'>
             <label>Username:</label>
             <br />
@@ -106,9 +104,11 @@ const LoginForm = () => {
           ) : (
             ''
           )}
-        </div>
-      </section>
-    </>
+       
+        </form>
+    
+
+    
   )
 }
 
