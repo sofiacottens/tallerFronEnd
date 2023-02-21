@@ -62,11 +62,9 @@ const LoginForm = () => {
   }
 
   return (
-    <>
-      <section className='d-flex flex-md justify-content-center login'>
-        <div className='card'>
-          <h2>Login</h2>
-          <br />
+    
+ 
+      <form>
           <div class='form-group'>
             <label>Username:</label>
             <br />
@@ -106,9 +104,11 @@ const LoginForm = () => {
           ) : (
             ''
           )}
-        </div>
-      </section>
-    </>
+       
+        </form>
+    
+
+    
   )
 }
 
