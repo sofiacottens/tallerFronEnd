@@ -1,9 +1,9 @@
-import '../../services/Api/Registrarse'
-import { registro } from '../../services/Api/Registrarse'
+import '../../services/Api/Api'
+import { registro } from '../../services/Api/Api'
 
 const  Regostrarse = ({}) => {
 
 
-
+//onchange para las ciudades
 
 }
