@@ -63,7 +63,9 @@ const LoginForm = () => {
 
   return (
     
- 
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Iniciar Sesion</h5>
       <form>
           <div class='form-group'>
             <label>Username:</label>
@@ -108,7 +110,8 @@ const LoginForm = () => {
         </form>
     
 
-    
+    </div>
+</div>
   )
 }
 
