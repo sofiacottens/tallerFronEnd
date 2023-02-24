@@ -3,17 +3,19 @@ import { Registro } from '../../services/Api/Api'
 import { departamento } from '../../services/Api/Api';
 import { ciudad } from '../../services/Api/Api';
 import { useRef, useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 const Registrarse = () => {
 
-    const selectRef = useRef()
+    const selectRef = useRef();
     const [departamentos, setDeparamentos] = useState([]);
+    const dispatch = useDispatch();
     
     useEffect(() => {
-        departamento
-          .then(data => {
-            setDeparamentos(data.departamentos)
-          })
+        departamento()
+            .then(data => {
+                dispatch(setDeparamentos(data.departamentos))
+            })
           .catch(e => console.error('Ha ocurrido un error'))
       }, [])
 

@@ -15,9 +15,9 @@ const LoginForm = () => {
   const navigator = useNavigate()
 
   const user = useSelector(state => state.user.loggedUser)
-  if (user) {
-    return <Navigate to='/dashboard' replace={true} />
-  }
+  //if (user) {
+    //return <Navigate to='/dashboard' replace={true} />
+  //}
 
   const showError = () => {
     setError(true)
@@ -63,11 +63,11 @@ const LoginForm = () => {
 
   return (
     
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">Iniciar Sesion</h5>
+  <div className="card">
+    <div className="card-body">
+      <h5 className="card-title">Iniciar Sesion</h5>
       <form>
-          <div class='form-group'>
+          <div className='form-group'>
             <label>Username:</label>
             <br />
             <input
