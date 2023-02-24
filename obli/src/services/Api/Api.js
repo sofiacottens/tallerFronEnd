@@ -1,4 +1,4 @@
-const BASE_URL = 'https://dwallet.develotion.com/';
+const BASE_URL = 'https://dwallet.develotion.com';
 
 const login = async (username, pass) => {
   const response = await fetch(`${BASE_URL}/login.php`, {
