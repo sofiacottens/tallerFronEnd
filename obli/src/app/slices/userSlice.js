@@ -23,8 +23,12 @@ export const userSlice = createSlice({
       state.loggedUser = null;
       removeFromLocalStorage('toDoAppUser');
     },
+    setRegisterUser: (state, action) => {
+      const { payload } = action;
+      state.data = payload;
+  }
   },
 });
 
-export const { setLoginUser, setLogoutUser } = userSlice.actions;
+export const { setLoginUser, setLogoutUser , setRegisterUser} = userSlice.actions;
 export default userSlice.reducer;
