@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFilteredTodos, setTodos } from '../../app/slices/todosSlice'
-import { getTodos } from '../../services/Api'
-import AgregarGasto from './AgregarGasto/AgregarGasto'
-import Charts from './Charts'
+import { setFilteredMovimientoss, setMovimientos } from '../../app/slices/movimientosSlice'
+//import { getTodos } from '../../services/Api'
+import AgregarGasto from './Agregar/AgregarGasto'
+//import Charts from './Charts'
 import './Dashboard.css'
-import TodosFilter from './Filter'
-import Header from './Header'
-import Metrics from './Metrics'
+//import TodosFilter from './Filter'
+import Header from './Header/Header'
+//import Metrics from './TablaMovimientos'
 import TablaMovimientos from './TablaMovimientos/TablaMovimientos'
 
 const Dashboard = () => {
@@ -15,16 +15,16 @@ const Dashboard = () => {
   const todos = useSelector(state => state.todosSlice.todos)
   const dispatch = useDispatch()
 
-  useEffect(() => {
+  /*useEffect(() => {
     getTodos(user.id, user.apiKey)
       .then(data => {
-        dispatch(setTodos(data))
-        dispatch(setFilteredTodos(data))
+        dispatch(setMovimientos(data))
+        dispatch(setFilteredMovimientoss(data))
       })
       .catch(e => console.error('Ha ocurrido un error'))
-  }, [])
+  }, [])*/
 
-  return (
+  /*return (
     <>
       <Header />
       <Metrics />
@@ -43,6 +43,13 @@ const Dashboard = () => {
         </div>
       </div>
     </>
+    
+  )*/
+  return(
+    <>
+    <div></div>
+    </>
   )
+
 }
 export default Dashboard

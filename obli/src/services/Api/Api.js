@@ -105,4 +105,23 @@ const ciudad = async (idDepartamento) => {
   }
 };
 
-export { Registro , login, departamento, ciudad, deleteMovimiento};
+const agregarMovimiento = async (idDepartamento) => { //HACER
+  const response = await fetch(`${BASE_URL}/ciudades.php?idDepartamento=${idDepartamento}`, {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    
+  });
+
+  if (response.status === 200) {
+    return response.json();
+  } else {
+    return Promise.reject({
+      status: response.status,
+      message: 'Ha ocurrido un error',
+    });
+  }
+};
+
+export { Registro , login, departamento, ciudad, deleteMovimiento, agregarMovimiento};

@@ -2,9 +2,10 @@ import { useDispatch } from 'react-redux'
 import {
   deleteMovimientoById
 } from '../../../../app/slices/movimientosSlice'
-import { deleteMovimiento } from '../../../../services/Api'
+//import { deleteMovimiento } from '../../../../services/Api'
 
 const Rows = ({ todoId, todoTitle, completed }) => {
+  /*
   const dispatch = useDispatch()
   const onHandleDelete = () => {
     onDelete(todoId)
@@ -40,5 +41,6 @@ const Rows = ({ todoId, todoTitle, completed }) => {
       </td>
     </tr>
   )
+  */
 }
 export default Rows
