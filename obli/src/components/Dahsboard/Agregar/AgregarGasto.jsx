@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react'
+import { useRef, useState , useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addMovimiento } from '../../../app/slices/movimientosSlice'
-import { agregarMovimiento , rubros} from '../../../services/Api'
+import { agregarMovimiento , rubros} from '../../../services/Api/Api'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -14,48 +14,54 @@ const AgregarGasto = () => {
   const dispatch = useDispatch();
 
   //states
-  //const [moneda, cambiarMoneda] = useState({});
-  const [idMoneda, cambiarIdMoneda] = useState(0);
   const [gastos, setGasto] = useState([]);
   const [ingresos, setIngres] = useState([]);
+  const [rubros, setRubrios] = useState([]);
+  const [startDate, setStartDate] = useState(new Date());
 
   
   //variables
-  let rubr = {};
   const inputRubro = useRef();
   const inputConcepto = useRef();
   const inputTipoOperacion = useRef();
-  const inputValorActualMoneda = useRef();
+  const inputMedio = useRef();
+  const inputTotal = useRef();
 
   //funciones
-  const changeRubro = () => {
-      cambiarIdMoneda(inputRubro.current.value);
-      rubro = rubros.filter(rubro => rubro.id == inputRubro.current.value);
-      const cotizacion = document.getElementById("valorMoneda");
-      
-      if(rubro[0]){
-          cotizacion.value = rubro[0].cotizacion;
-      }else{
-          cotizacion.value = 0;
+  const changeTipo = () => {
+    if(inputTipoOperacion.current.value == "ingreso"){
+      setIngres(inputTipoOperacion.current.value);
+      ingresos = rubros.filter(ingresos => ingresos.id == inputTipoOperacion.current.value);
+
+    }else{
+      if(inputTipoOperacion.current.value == "gasto"){
+        setGasto(inputTipoOperacion.current.value);
+        gastos = rubros.filter(gastos => gastos.id == inputTipoOperacion.current.value)
       }
+    }
+      
   }
     useEffect(() => {
     
       rubros()
           .then(data => { 
             if(data.tipo == "gasto"){
-              dispatch(setGasto(data.gastos))
+              dispatch(setRubrios(data.gastos))
             }else{
-              dispatch(setIngres(data.ingresos))
+              dispatch(setRubrios(data.ingresos))
 
             }
               
           })
-        .catch(showAlert(true))
+        .catch(console.log("error"))
     },[])
-  const _crearTransaccion = async () => {
+  
+  const changeRubro =() =>{
+
+  }
+  
+    const _crearTransaccion = async () => {
       const tipoOperacion = inputTipoOperacion.current.value;
-      const idMoneda = inputIdMoneda.current.value;
       const cantidadMoneda = inputConcepto.current.value;
       const inputMedio = inputMedio.current.value;
 
@@ -64,10 +70,7 @@ const AgregarGasto = () => {
           return;
       } 
       
-      if(idMoneda <= 0){
-          alert("Debe seleccionar una moneda válida");
-          return;
-      }
+      
       
       if(cantidadMoneda <= 0){
           alert("La cantidad no puede ser igual o menor que 0");
@@ -77,12 +80,10 @@ const AgregarGasto = () => {
       const datos = {
           idUsuario: userLogged.id,
           tipoOperacion: tipoOperacion,
-          moneda: idMoneda,
           cantidad: cantidadMoneda,
-          valorActual: valorActualMoneda
       }
 
-      let data = await FetchApiWithApiKeyAndBody(urlCrearTransaccion, "POST", userLogged.apiKey, datos);
+      let data = await agregarMovimiento(datos);
 
       //idTransaccion: 4772, mensaje: 'Transacción ingresada con éxito', codigo: 200
       if(data.codigo === 200){
@@ -91,10 +92,8 @@ const AgregarGasto = () => {
               id: data.idTransaccion,
               tipo_operacion: tipoOperacion,
               usuarios_id: userLogged.id,
-              moneda: idMoneda,
-              valor_actual: valorActualMoneda
           }
-          dispatch(nuevaTransaccion(estructuraNuevaTransaccion));
+          dispatch(agregarMovimiento(estructuraNuevaTransaccion));
           alert(data.mensaje);
       }else{
           alert("Ha ocurrido un error en la petición");
@@ -105,13 +104,13 @@ const AgregarGasto = () => {
     <form className=''>
       <h4 className="container mt-4 mb-4 mx-auto text-center">Agregar Gasto / Ingreso</h4>
       <div className="form-outline mb-4">
-         <select className="form-select" ref={ inputTipoOperacion } >
+         <select className="form-select" ref={ inputTipoOperacion } onChange= { changeTipo } >
             <option defaultValue>Seleccione tipo de operación</option>
             <option value="gasto">Gasto</option>
             <option value="ingreso">Ingreso</option>
           </select>
       <div className="form-outline mb-4">
-      <select className="form-control" id="exampleFormControlSelect1" onChange= { changeRubro }>
+      <select className="form-control" id="exampleFormControlSelect1"ref={ inputRubro }  onChange= { changeRubro }>
         {gastos ? (gastos.map(({ id, nombre }) => (
           <option value={id }>{nombre}</option>)))
           : (ingresos.map(({ id, nombre }) => (
@@ -128,17 +127,15 @@ const AgregarGasto = () => {
             
               <option value="1">Efectivo</option>
               <option value="4">Banco</option>
-              : 
+              
               <option value="1">Efectivo</option>
               <option value="2">Debito</option>
               <option value="3">Credito</option>
-            
-            
            
           </select>
           <div className="form-outline mb-4">
             <label className="form-label" htmlFor="cantidadUnidades">Total:</label>
-            <input type="number" id="total" className="form-control" ref={ inputCantidadMoneda } />
+            <input type="number" id="total" className="form-control" ref={ inputTotal } />
           </div>
           <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
           <div className="form-outline d-grid">

@@ -105,8 +105,35 @@ const ciudad = async (idDepartamento) => {
   }
 };
 
-const agregarMovimiento = async (idDepartamento) => { //HACER
-  const response = await fetch(`${BASE_URL}/ciudades.php?idDepartamento=${idDepartamento}`, {
+const agregarMovimiento = async (data) => { 
+  const response = await fetch(`${BASE_URL}/movimientos.php`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      idUsuario: 3,
+      concepto: "Gasto en cosas 2",
+      categoria: 4,
+      total: 10,
+      medio: "Efectivo",
+      fecha: "2022-09-29"
+    }),
+
+  });
+
+  if (response.status === 200) {
+    return response.json();
+  } else {
+    return Promise.reject({
+      status: response.status,
+      message: 'Ha ocurrido un error',
+    });
+  }
+};
+
+const rubros = async () => { //HACER
+  const response = await fetch(`${BASE_URL}/rubros.php`, {
     method: 'GET',
     headers: {
       'Content-type': 'application/json',
@@ -124,4 +151,4 @@ const agregarMovimiento = async (idDepartamento) => { //HACER
   }
 };
 
-export { Registro , login, departamento, ciudad, deleteMovimiento, agregarMovimiento};
+export { Registro , login, departamento, ciudad, deleteMovimiento, agregarMovimiento, rubros};

@@ -129,7 +129,7 @@ const Registrarse = () => {
             <div className="form-group">
                 <label htmlFor="exampleFormControlSelect1">Ciudad</label>
                 <select className="form-control" id="exampleFormControlSelect1" onChange= { changeCiudad }>
-
+                <option defaultValue>Seleccione tipo de operación</option>
                     {ciudades.map(({ id, nombre }) => (
             <option value={id }>{nombre}</option>))}
                 </select>
