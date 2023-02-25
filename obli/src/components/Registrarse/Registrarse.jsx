@@ -15,7 +15,9 @@ const Registrarse = () => {
     const [depa, cambiarDepartamento] = useState(0);
     const [ciudades, cambiarCiudades] = useState([]);
     const [laCiudad, cambiarCiudad] = useState(0);
-    const [error, setError] = useState(false)
+    const [alerta, setAlerta] = useState(false)
+    const [error, setError] = useState("")
+
 
 
     const dispatch = useDispatch();
@@ -25,15 +27,15 @@ const Registrarse = () => {
             .then(data => {
                 dispatch(setDeparamentos(data.departamentos))
             })
-          .catch(showError(true))
-      }, [])
+          .catch(showAlert(true))
+      },[])
 
       useEffect(() => {
         ciudad(depa) 
          .then(data => {
             dispatch(cambiarCiudades(data.ciudades))
         })
-      .catch(showError(true))
+      .catch(showAlert(true))
   }, [depa])
 
     const changeDepartamento = ({ target }) => {
@@ -45,51 +47,61 @@ const Registrarse = () => {
     }
     
     const changeUserName = ({ target }) => {
+        console.log(target.value)
         cambiarUserName(target.value);
     }
 
     const changePassword = ({ target }) => {
         cambiarPassword(target.value);
     }
-    const showError = () => {
-        setError(true)
+    const showAlert = () => {
+        setAlerta(true)
         setTimeout(() => {
-          setError(false)
+        setAlerta(false)
+        }, 1000)
+      }
+      const showError = (msg) => {
+        setError(msg)
+        setTimeout(() => {
+        setError("")
         }, 2000)
       }
+      
     const submitRegister = async (e) => {
         e.preventDefault();
         let regex = /[A-Za-z0-9]/;
 
         if(!userName || !password || !depa || depa <= 0 || !laCiudad || laCiudad <= 0 ){
-            alert("Por favor, complete los datos del formulario correctamente");
+            console.log(`Datos: `,{userName}, {password}, {depa}, {laCiudad})
+
+            showError("Por favor, complete los datos del formulario correctamente")
             return;
         }
 
         if(!regex.test(userName)){
-            alert("Caracteres no permitidos");
+            showError("Caracteres no permitidos")
             return;
         }
 
         if(password.length < 8){
-            alert("La contraseña debe tener un mínimo de 8 caracteres.");
+            showError("La contraseña debe tener un mínimo de 8 caracteres.")
             return;
         }
         
         const datos = {
             usuario: userName,
-            password: password,
+            pass: password,
             idDepartamento: depa,
             idCiudad: laCiudad
         };
 
         try{
-            const data = Registro(datos.usuario, datos.password, datos.depa, datos.laCiudad);
+            const data = Registro(datos.usuario, datos.pass, datos.idDepartamento, datos.idCiudad);
             const user = { apiKey: data.apiKey, id: data.id }
             dispatch(setRegisterUser(user));
             navigator("/dashboard");
         }catch({ message }){
-            alert(message);
+            showError(message)
         }
     }
 
@@ -99,12 +111,12 @@ const Registrarse = () => {
         <h1 className="container col-3 mt-4 mb-4 mx-auto text-center">Register</h1>
         <form className="container col-3">
             <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="userNameRegister" onChange= { changeUserName }>Usuario</label>
-                <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="usuario"></input>
+                <label className="form-label" htmlFor="userNameRegister" >Usuario</label>
+                <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="usuario"onChange= { changeUserName }></input>
             </div>
             <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="passwordRegister" onChange= { changePassword }>Password</label>
-                <input type="password" className="form-control" id="idPassword" placeholder="Password"></input>
+                <label className="form-label" htmlFor="passwordRegister" >Password</label>
+                <input type="password" className="form-control" id="idPassword" placeholder="Password" onChange= { changePassword }></input>
             </div>
             <div className="form-group">
                 <label htmlFor="exampleFormControlSelect1">Deparamento</label>
@@ -126,9 +138,22 @@ const Registrarse = () => {
                 <button className="btn btn-primary" type="button" onClick={ submitRegister }>Registrarme</button>
             </div>
 
-          {error ? (
+          
+          
+            
+          
+          {alerta ? (
+            <div className='alert alert-secondary' role='alert'>
+              Cargando..
+            </div>
+          ) : (
+            ''
+          )}
+
+
+            {error ? (
             <div className='alert alert-danger' role='alert'>
-              Erroooor
+              {error}
             </div>
           ) : (
             ''
