@@ -63,13 +63,11 @@ const LoginForm = () => {
 
   return (
     
-  <div className="card">
-    <div className="card-body">
-      <h5 className="card-title">Iniciar Sesion</h5>
-      <form>
-          <div className='form-group'>
-            <label>Username:</label>
-            <br />
+    <>
+            <h1 className="container col-3 mt-4 mb-4 mx-auto text-center">Login</h1>
+            <form className="container col-3">
+                <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="usuarioLogin">Usuario</label>
             <input
               className='form-control'
               type='text'
@@ -78,9 +76,8 @@ const LoginForm = () => {
               onChange={validateForm}
             />
           </div>
-          <div className='form-group'>
-            <label>Password:</label>
-            <br />
+          <div className="form-outline mb-4">
+            <label className="form-label" htmlFor="passwordLogin">Password</label>
             <input
               className='form-control'
               type='password'
@@ -89,9 +86,9 @@ const LoginForm = () => {
               onChange={validateForm}
             />
           </div>
-          <div className='form-group'>
+          <div className="form-outline d-grid">
             <button
-              className='btn btn-primary'
+              className="btn btn-primary" type="button" 
               onClick={onSignInClick}
               disabled={btnDisabled}
             >
@@ -108,10 +105,8 @@ const LoginForm = () => {
           )}
        
         </form>
-    
 
-    </div>
-</div>
+</>
   )
 }
 

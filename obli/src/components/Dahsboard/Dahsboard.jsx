@@ -1,37 +1,46 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFilteredTodos, setTodos } from '../../app/slices/todosSlice'
-//import AddTodoForm from './AddForm/AddTodoForm'
+import { setFilteredMovimientoss, setMovimientos } from '../../app/slices/movimientosSlice'
+import { getMovimientos } from '../../services/Api/Api'
+import AgregarGasto from './AgregarGasto/AgregarGasto'
 //import Charts from './Charts'
-//import './Dashboard.css'
-//import TodosFilter from './Filter'
-//import Header from './Header'
+import './Dashboard.css'
+import MovimientosFilter from './Filter/MovimientosFilter'
+import Header from './Header/Header'
 //import Metrics from './Metrics'
-//import TodosTable from './TodosTable'
+import TablaMovimientos from './TablaMovimientos/TablaMovimientos'
 
 const Dashboard = () => {
-  //const user = useSelector(state => state.user.loggedUser)
-  //const todos = useSelector(state => state.todosSlice.todos)
-  //const dispatch = useDispatch()
+  const user = useSelector(state => state.user.loggedUser)
+  const movs = useSelector(state => state.movimientosSlice.movimientos)
+  const dispatch = useDispatch()
 
-  //useEffect(() => {
-    //getTodos(user.id, user.apiKey)
-      //.then(data => {
-        //dispatch(setTodos(data))
-        //dispatch(setFilteredTodos(data))
-      //})
-      //.catch(e => console.error('Ha ocurrido un error'))
-  //}, [])
+  useEffect(() => {
+    getMovimientos(user.id, user.apiKey)
+      .then(data => {
+        dispatch(setMovimientos(data))
+        dispatch(setFilteredMovimientoss(data))
+      })
+      .catch(e => console.error('Ha ocurrido un error'))
+  }, [])
 
   return (
     <>
-    <div className='card'>
+      <Header />
+      <div className='card'>
         <div className='card-body'>
-          <h5 class='card-title'>Soy el Dashboard</h5>
+          <h5 className='card-title'>Agregar un nuevo gasto</h5>
+          <AgregarGasto />
         </div>
-    </div>
+      </div>
+      <div className='card'>
+        <div className='card-body'>
+          <MovimientosFilter />
+          <br />
+          {movs.length > 0 ? <TablaMovimientos /> : 'Loading...'}
+        </div>
+      </div>
     </>
   )
 }
-
 export default Dashboard
