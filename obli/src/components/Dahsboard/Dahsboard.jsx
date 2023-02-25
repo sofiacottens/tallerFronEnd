@@ -14,6 +14,7 @@ const Dashboard = () => {
   const user = useSelector(state => state.user.loggedUser)
   const movs = useSelector(state => state.movimientosSlice.movimientos)
   const dispatch = useDispatch()
+  console.log(movs)
 
   useEffect(() => {
     getMovimientos(user.id, user.apiKey)

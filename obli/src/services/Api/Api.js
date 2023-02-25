@@ -87,13 +87,19 @@ const deleteMovimiento = async(idMovimiento) => {
 }
 
 const getMovimientos = async (idUsuario, auth) => {
-  const response = await fetch(`${BASE_URL}/movimientos.php?idUsuario=${idUsuario}`,
-    {method: 'GET',
+  console.log(auth)
+  console.log(idUsuario)
+  //token user dwallet 3 a2e05e04d264fb88978860a999fe0716
+  const response = await fetch(`${BASE_URL}/movimientos.php?idUsuario=${idUsuario}`,{
+    method: 'GET',
      headers : {
       'Content-type': 'application/json',
-      Authorization: auth,
+      'apikey': auth,
      },
-    });
+     params:{
+      'idUsuario': idUsuario,
+    },
+  });
   if (response.status === 200) {
     return response.json();
   } else {
