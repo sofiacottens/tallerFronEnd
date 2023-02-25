@@ -86,6 +86,28 @@ const deleteMovimiento = async(idMovimiento) => {
   }
 }
 
+const getMovimientos = async (idUsuario, auth) => {
+  const response = await fetch(`${BASE_URL}/movimientos.php?idUsuario=${idUsuario}`,
+    {method: 'GET',
+     headers : {
+      'Content-type': 'application/json',
+      Authorization: auth,
+     },
+    });
+  if (response.status === 200) {
+    return response.json();
+  } else {
+    return Promise.reject(
+      {
+        status: response.status,
+        message: 'Ha ocurrido un error'
+      }
+    )
+  }
+
+
+}
+
 const ciudad = async (idDepartamento) => {
   const response = await fetch(`${BASE_URL}/ciudades.php?idDepartamento=${idDepartamento}`, {
     method: 'GET',
@@ -105,4 +127,4 @@ const ciudad = async (idDepartamento) => {
   }
 };
 
-export { Registro , login, departamento, ciudad, deleteMovimiento};
+export { Registro , login, departamento, ciudad, deleteMovimiento, getMovimientos};

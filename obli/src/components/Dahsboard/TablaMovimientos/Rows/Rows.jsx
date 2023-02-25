@@ -2,19 +2,19 @@ import { useDispatch } from 'react-redux'
 import {
   deleteMovimientoById
 } from '../../../../app/slices/movimientosSlice'
-import { deleteMovimiento } from '../../../../services/Api'
+import { deleteMovimiento } from '../../../../services/Api/Api'
 
-const Rows = ({ todoId, todoTitle, completed }) => {
+const Rows = ({ movId }) => {
   const dispatch = useDispatch()
   const onHandleDelete = () => {
-    onDelete(todoId)
+    onDelete(movId)
   }
 
-  const onDelete = todoId => {
-    deleteTodo(todoId)
+  const onDelete = movId => {
+    deleteMovimiento(movId)
       .then(res => {
         if (res.status === 200) {
-          dispatch(deleteTodoById(todoId))
+          dispatch(deleteMovimientoById(movId))
         }
       })
       .catch(e => {
@@ -22,17 +22,9 @@ const Rows = ({ todoId, todoTitle, completed }) => {
       })
   }
 
-  const onHandleComplete = async () => {
-    try {
-      await completeTodo(todoId)
-      dispatch(completeTodoById(todoId))
-    } catch (error) {}
-  }
-
   return (
     <tr>
-      <td>{todoId}</td>
-      <td>{todoTitle}</td>
+      <td>{movId}</td>
       <td>
         <button onClick={onHandleDelete} className='btn btn-danger'>
           Delete

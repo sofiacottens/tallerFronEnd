@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addTodo } from '../../../app/slices/todosSlice'
-import { createTodo } from '../../../services/todos'
+//import { addTodo } from '../../../app/slices/todosSlice'
+//import { createTodo } from '../../../services/todos'
 
 const AgregarGasto = () => {
-  const user = useSelector(state => state.user.loggedUser)
+  <h1>Soy el btn de agregar gastos</h1>
+/*   const user = useSelector(state => state.user.loggedUser)
   const [btnDisabled, setDisable] = useState(true)
   const inputRef = useRef()
   const dispatch = useDispatch()
@@ -59,6 +60,8 @@ const AgregarGasto = () => {
         </button>
       </div>
     </form>
-  )
+  ) */
 }
+
+
 export default AgregarGasto
