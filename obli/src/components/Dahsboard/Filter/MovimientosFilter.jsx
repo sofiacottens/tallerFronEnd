@@ -5,17 +5,17 @@ import { setFilteredMovimientoss } from '../../../app/slices/movimientosSlice'
 const MovimientosFilter = () => {
   const selectRef = useRef()
   const dispatch = useDispatch()
-  const movs = useSelector(state => state.movimientosSlice.todos)
+  const movs = useSelector(state => state.movimientosSlice.movimientos)
 
   const onSelectChange = () => {
     const filter = Number(selectRef.current.value)
     if (filter === 0) {
       // Ingresos
-      const ingresos = movs.filter(movimiento => movimiento.value > 0)
+      const ingresos = movs.filter(movimiento => !(movimiento.total > 0))
       dispatch(setFilteredMovimientoss(ingresos))
     } else if (filter === 1) {
       // Gastos
-      const gastos = movs.filter(movimiento => movimiento.value < 0)
+      const gastos = movs.filter(movimiento => !(movimiento.total < 0))
       dispatch(setFilteredMovimientoss(gastos))
     } else {
       dispatch(setFilteredMovimientoss(movs))

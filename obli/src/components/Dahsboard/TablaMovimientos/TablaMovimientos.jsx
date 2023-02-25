@@ -3,25 +3,32 @@ import Rows from './Rows/Rows'
 import './TablaMovimientos.css'
 
 const TablaMovimientos = () => {
-  const todos = useSelector(state => state.todosSlice.filteredTodos)
+  const movs = useSelector(state => state.movimientosSlice.filteredMovimientos)
   return (
     <>
       <table className='table table-hover'>
         <thead>
           <tr>
             <th scope='col'>#</th>
-            <th scope='col'>Title</th>
-            <th scope='col'>Completed</th>
+            <th scope='col'>Concepto</th>
+            <th scope='col'>Categoria</th>
+            <th scope='col'>Medio</th>
+            <th scope='col'>Total</th>
+            <th scope='col'>Fecha</th>
+            <th scope='col'>#Usuario</th>
             <th scope='col'></th>
           </tr>
         </thead>
         <tbody>
-          {todos.map(({ id, title, completed }) => (
+          {movs.map(({ id, concepto, categoria, medio, total, fecha, idUsuario }) => (
             <Rows
-              todoId={id}
-              todoTitle={title}
-              completed={completed}
-              key={id}
+              movId={id}
+              concepto={concepto}
+              categoria={categoria}
+              medio={medio}
+              total={total}
+              fecha={fecha}
+              idUsuario={idUsuario}
             />
           ))}
         </tbody>
