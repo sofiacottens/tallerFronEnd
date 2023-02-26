@@ -14,10 +14,10 @@ const LoginForm = () => {
   const dispatch = useDispatch()
   const navigator = useNavigate()
 
-  const user = useSelector(state => state.user.loggedUser)
+/*   const user = useSelector(state => state.user.loggedUser)
   if (user) {
     return <Navigate to='/dashboard' replace={true} />
-  }
+  } */
 
   const showError = () => {
     setError(true)
@@ -105,7 +105,7 @@ const LoginForm = () => {
         )}
 
         <div className="form-outline d-grid">
-          <nav class="nav" >
+          <nav className="nav" >
             <a className=" my-2 my-sm-3" href="/registro">Registrarse</a>
           </nav>
 

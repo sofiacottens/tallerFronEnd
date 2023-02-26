@@ -106,9 +106,9 @@ const getMovimientos = async (idUsuario, auth) => {
     return Promise.reject(
       {
         status: response.status,
-        message: 'Ha ocurrido un error'
+        message: ('Ha ocurrido un error: ' + response.status),
       }
-    )
+    );
   }
 
 

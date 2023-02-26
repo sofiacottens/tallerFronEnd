@@ -15,7 +15,7 @@ const Dashboard = () => {
   const user = useSelector(state => state.user.loggedUser)
   const movs = useSelector(state => state.movimientosSlice.movimientos)
   const dispatch = useDispatch()
-  console.log(movs)
+  //console.log(movs)
 
   useEffect(() => {
     getMovimientos(user.id, user.apiKey)
@@ -23,8 +23,10 @@ const Dashboard = () => {
         dispatch(setMovimientos(data.movimientos))
         dispatch(setFilteredMovimientoss(data.movimientos))
       })
-      .catch(e => console.error('Ha ocurrido un error'))
+      .catch(e => console.error('Ha ocurrido un error: ' + e))
   }, [])
+
+  
 
   return (
     <>

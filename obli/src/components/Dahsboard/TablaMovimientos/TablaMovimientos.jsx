@@ -4,6 +4,7 @@ import './TablaMovimientos.css'
 
 const TablaMovimientos = () => {
   const movs = useSelector(state => state.movimientosSlice.filteredMovimientos)
+  console.log(movs)
   return (
     <>
       <table className='table table-hover'>
