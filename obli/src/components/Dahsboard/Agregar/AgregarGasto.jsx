@@ -3,16 +3,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addMovimiento } from '../../../app/slices/movimientosSlice'
 import { agregarMovimiento, rubros } from '../../../services/Api/Api'
 import { setFilteredRubros, setRubros } from '../../../app/slices/rubrosSlice'
+import { setFilteredMedios, setMedios } from '../../../app/slices/mediosSlice'
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
 const AgregarGasto = () => {
   //Redux States
-  // const rubross = useSelector((state) => state.rubros.data);
   const user = useSelector(state => state.user.loggedUser)
   const todosLosRubros = useSelector((state) => state.rubrosSlice.rubros);
-  console.log(`useSelector ${todosLosRubros}`)
+  const todosLosMedios = useSelector((state) => state.mediosSlice.medios);
+  console.log(`todos los medios ${todosLosMedios}`)
+
 
 
   const dispatch = useDispatch();
@@ -20,6 +23,7 @@ const AgregarGasto = () => {
   //states
 
   const [rubroFiltrado, setRubrosFil] = useState([]);
+  const [medioFiltrado, setMedioFil] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
 
 
@@ -29,22 +33,21 @@ const AgregarGasto = () => {
   const inputTipo = useRef();
   const inputMedio = useRef();
   const inputRubro = useRef();
-
-
+  const inputDate = useRef();
   const inputTotal = useRef();
+
 
   //funciones
   const changeTipo = () => {
     const valorRubro = (inputTipo.current.value)
     console.log(`valor rubro ${valorRubro}`)
-    const filtradosI = todosLosRubros.filter(todos => todos.tipo === valorRubro)
-    dispatch(setFilteredRubros(filtradosI))
-    dispatch(setRubrosFil(filtradosI))
-
-
-
-
-
+    const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro)
+    const filtradosM = todosLosMedios.filter(todosM => todosM.tipo == valorRubro)
+    console.log(`todos los medios ${filtradosM}`)
+    dispatch(setRubrosFil(filtradosR))
+    dispatch(setFilteredRubros(filtradosR))
+    dispatch(setMedioFil(filtradosM))
+    dispatch(setFilteredMedios(filtradosM))
   }
 
   useEffect(() => {
@@ -58,40 +61,52 @@ const AgregarGasto = () => {
   }, [rubroFiltrado])
 
 
-  const changeRubro = () => {
-
-  }
 
 
-  const _crearTransaccion = async () => {
-    const tipoOperacion = inputTipo.current.value;
+  const crearMovimiento = async () => {
+    const rubro = inputRubro.current.value;
     const medio = inputMedio.current.value;
+    const concepto = inputConcepto.current.value;
+    const fecha = inputDate.current.value;
+    const total = inputTotal.current.value;
 
-    if (tipoOperacion !== 1 && tipoOperacion !== 2) {
-      alert("Debe seleccionar un tipo de operación");
+
+    if (total <= 0) {
+      alert("Debe ingresar un valor mayor a 0");
+      return;
+    }
+    if (medio == null) {
+      alert("Debe elegir un medio");
+      return;
+    }
+    if (concepto == null) {
+      alert("Debe ingresar un concepto");
+      return;
+    }
+    if (concepto == null) {
+      alert("Debe seleccionar una fecha");
       return;
     }
 
-
     const datos = {
       idUsuario: user.id,
-      tipoOperacion: tipoOperacion,
-    }
+      concepto: concepto,
+      categoria: rubro,
+      total: total,
+      medio: medio,
+      fecha: fecha
 
-    let data = await agregarMovimiento(datos, user.apiKey);
-
-    //idTransaccion: 4772, mensaje: 'Transacción ingresada con éxito', codigo: 200
-    if (data.codigo === 200) {
-      const estructuraNuevaTransaccion = {
-        id: data.idTransaccion,
-        tipo_operacion: tipoOperacion,
-        usuarios_id: user.id,
-      }
-      dispatch(agregarMovimiento(estructuraNuevaTransaccion));
-      alert(data.mensaje);
-    } else {
-      alert("Ha ocurrido un error en la petición");
     }
+    agregarMovimiento(datos, user.apiKey, user.idUsuario)
+      .then(data => {
+        dispatch(addMovimiento(data.movimiento));
+        alert(data.mensaje);
+        console.log(`movimiento ${data.movimiento}`)
+        navigator("/dashboard");
+      }).catch(e => console.error("Ha ocurrido un error en la petición"))
+
+
+
   }
 
   return (
@@ -103,51 +118,56 @@ const AgregarGasto = () => {
             <label htmlFor="cantidadUnidades">Tipo de operacion</label>
             <select className="form-control " onChange={changeTipo} ref={inputTipo}>
 
-              <option defaultValue>Tipo de operacion</option>
-              <option value={`ingreso`}>Ingreso</option>
-              <option value={`gasto`}>Gasto</option>
 
+              <div class="card-group">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Agregar Gasto</h5>
+                    <label htmlFor="cantidadUnidades">Tipo de operacion</label>
+                    <select className="form-control my-2 my-sm-3 " onChange={changeTipo} ref={inputTipo}>
+
+                      <option defaultValue>Tipo de operacion</option>
+                      <option value="ingreso">Ingreso</option>
+                      <option value="gasto">Gasto</option>
+
+                    </select>
+
+                    <select className="form-control " id="exampleFormControlSelect1" ref={inputRubro} onChange={changeRubro}>
+                      {rubroFiltrado.map(({ id, nombre }) => (
+                        <option value={id}>{nombre}</option>))}
+
+                    </select>
+                    <label htmlFor="cantidadUnidades">Concepto del gasto:</label>
+                    <input type="text" id="conceptoGasto" className="form-control" ref={inputConcepto} />
+                    <select className="form-control" ref={inputMedio} >
+                      <option defaultValue>Seleccione el medio</option>
+                    </select>
+
+                    <select className="form-control my-2 my-sm-3" id="exampleFormControlSelect1" ref={inputRubro}  >
+                      {rubroFiltrado.map(({ id, nombre }) => (
+                        <option key={id} value={id}>{nombre}</option>))}
+
+                    </select>
+                    <label htmlFor="cantidadUnidades">Concepto del gasto:</label>
+                    <input type="text" id="conceptoGasto" className="form-control my-2 my-sm-3" ref={inputConcepto} />
+                    <label htmlFor="cantidadUnidades">Medio</label>
+                    <select className="form-control" ref={inputMedio} >
+                      <option value={"Efectivo"}>Efectivo</option></select>
+                    <label className="form-label my-2   " htmlFor="cantidadUnidades">Total:</label>
+                    <input type="number" id="total" className="form-control my-2 my-sm-3" ref={inputTotal} />
+                    <DatePicker ref={inputDate} selected={startDate} onChange={(date) => setStartDate(date)} />
+                    <button className="btn btn-primary my-2 my-sm-3" type="button" onClick={crearMovimiento} >Crear Registro</button>
+
+                  </div>
+                </div>
+
+              </div>
             </select>
-
-            <select className="form-control " id="exampleFormControlSelect1" ref={inputRubro} onChange={changeRubro}>
-              {rubroFiltrado.map(({ id, nombre }) => (
-                <option value={id}>{nombre}</option>))}
-
-            </select>
-            <label htmlFor="cantidadUnidades">Concepto del gasto:</label>
-            <input type="text" id="conceptoGasto" className="form-control" ref={inputConcepto} />
-            <select className="form-control" ref={inputMedio} >
-              <option defaultValue>Seleccione el medio</option>
-
-
-              <option value="1">Efectivo</option>
-              <option value="2">Debito</option>
-              <option value="3">Credito</option>
-
-            </select>
-            <label className="form-label" htmlFor="cantidadUnidades">Total:</label>
-            <input type="number" id="total" className="form-control" ref={inputTotal} />
-            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-            <button className="btn btn-primary my-2 my-sm-3" type="button" onClick={_crearTransaccion} >Crear Registro</button>
-
-
-
-
           </div>
         </div>
-
       </div>
-
-
-
-
     </form>
-
-
-
-
-
-
   )
 }
+
 export default AgregarGasto

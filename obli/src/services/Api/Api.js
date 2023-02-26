@@ -133,7 +133,7 @@ const ciudad = async (idDepartamento) => {
   }
 };
 
-const agregarMovimiento = async (data, auth) => { 
+const agregarMovimiento = async (data, auth, idUsuario) => { 
   const response = await fetch(`${BASE_URL}/movimientos.php`, {
     method: 'POST',
     headers: {
@@ -142,17 +142,18 @@ const agregarMovimiento = async (data, auth) => {
 
     },
     body: JSON.stringify({
-      idUsuario: 3,
-      concepto: "Gasto en cosas 2",
-      categoria: 4,
-      total: 10,
-      medio: "Efectivo",
-      fecha: "2022-09-29"
+      idUsuario: idUsuario,
+      concepto: data.concepto,
+      categoria: data.categoria,
+      total: data.total,
+      medio: data.medio,
+      fecha: data.fecha
     }),
 
   });
 
   if (response.status === 200) {
+    console.log(`Agrego OK ${data.concepto}`)
     return response.json();
   } else {
     return Promise.reject({
