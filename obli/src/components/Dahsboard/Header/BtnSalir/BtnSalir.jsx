@@ -1,14 +1,17 @@
+import './BtnSalir.css'
 const ButtonLogout = ({ onLogout }) => {
     return (
-      <form className='form-inline my-2 my-lg-0'>
-        <button
+      
+        <button id="logout"
           onClick={onLogout}
-          className='btn btn-outline-success my-2 my-sm-0'
+          className='btn my-2 my-sm-3'
+
+          
           type='submit'
         >
           Logout
         </button>
-      </form>
+   
     )
   }
   

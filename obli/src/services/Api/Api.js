@@ -133,11 +133,13 @@ const ciudad = async (idDepartamento) => {
   }
 };
 
-const agregarMovimiento = async (data) => { 
+const agregarMovimiento = async (data, auth) => { 
   const response = await fetch(`${BASE_URL}/movimientos.php`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
+      'apikey': auth,
+
     },
     body: JSON.stringify({
       idUsuario: 3,
@@ -160,21 +162,24 @@ const agregarMovimiento = async (data) => {
   }
 };
 
-const rubros = async () => { //HACER
+const rubros = async (auth) => { 
   const response = await fetch(`${BASE_URL}/rubros.php`, {
     method: 'GET',
     headers: {
       'Content-type': 'application/json',
+      'apikey': auth,
     },
     
   });
 
   if (response.status === 200) {
-    return response.json();
+    console.log(`llegas pero no, ${auth}`)
+    
+    return response.json()
   } else {
     return Promise.reject({
       status: response.status,
-      message: 'Ha ocurrido un error',
+      message: `error ${auth}`,
     });
   }
 };
