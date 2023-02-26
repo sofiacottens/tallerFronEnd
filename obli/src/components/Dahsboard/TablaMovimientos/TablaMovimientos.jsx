@@ -22,7 +22,7 @@ const TablaMovimientos = () => {
         <tbody>
           {movs.map(({ id, concepto, categoria, medio, total, fecha, idUsuario }) => (
             <Rows
-              movId={id}
+              key={id}
               concepto={concepto}
               categoria={categoria}
               medio={medio}

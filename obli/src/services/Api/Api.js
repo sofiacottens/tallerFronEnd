@@ -179,4 +179,4 @@ const rubros = async () => { //HACER
   }
 };
 
-export { Registro , login, departamento, ciudad, deleteMovimiento, agregarMovimiento, rubros};
+export { Registro , login, departamento, ciudad, deleteMovimiento, agregarMovimiento, rubros, getMovimientos};

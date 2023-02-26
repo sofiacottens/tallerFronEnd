@@ -7,16 +7,17 @@ const MovimientosFilter = () => {
   const dispatch = useDispatch()
   const movs = useSelector(state => state.movimientosSlice.movimientos)
 
+  //console.log(movs)
   const onSelectChange = () => {
     const filter = Number(selectRef.current.value)
     if (filter === 0) {
       // Ingresos
-      const ingresos = movs.filter(movimiento => !(movimiento.total > 0))
-      dispatch(setFilteredMovimientoss(ingresos))
+      const ingresos = movs.filter(movimiento => movimiento.total > 0)
+      dispatch(setFilteredMovimientoss(movs))
     } else if (filter === 1) {
       // Gastos
-      const gastos = movs.filter(movimiento => !(movimiento.total < 0))
-      dispatch(setFilteredMovimientoss(gastos))
+      const gastos = movs.filter(movimiento => movimiento.total < 0)
+      dispatch(setFilteredMovimientoss(movs))
     } else {
       dispatch(setFilteredMovimientoss(movs))
     }
