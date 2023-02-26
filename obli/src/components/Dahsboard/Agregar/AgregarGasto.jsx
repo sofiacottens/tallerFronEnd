@@ -102,7 +102,6 @@ const AgregarGasto = () => {
         dispatch(addMovimiento(data.movimiento));
         alert(data.mensaje);
         console.log(`movimiento ${data.movimiento}`)
-        navigator("/dashboard");
       }).catch(e => console.error("Ha ocurrido un error en la petición"))
 
 
