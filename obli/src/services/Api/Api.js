@@ -175,7 +175,7 @@ const rubros = async (auth) => {
   if (response.status === 200) {
     console.log(`llegas pero no, ${auth}`)
     
-    return response.JSON.stringify()
+    return response.json()
   } else {
     return Promise.reject({
       status: response.status,

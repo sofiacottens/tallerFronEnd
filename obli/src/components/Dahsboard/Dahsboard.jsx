@@ -20,8 +20,8 @@ const Dashboard = () => {
   useEffect(() => {
     getMovimientos(user.id, user.apiKey)
       .then(data => {
-        dispatch(setMovimientos(data))
-        dispatch(setFilteredMovimientoss(data))
+        dispatch(setMovimientos(data.movimientos))
+        dispatch(setFilteredMovimientoss(data.movimientos))
       })
       .catch(e => console.error('Ha ocurrido un error'))
   }, [])

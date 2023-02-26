@@ -11,14 +11,15 @@ const AgregarGasto = () => {
   //Redux States
  // const rubross = useSelector((state) => state.rubros.data);
  const user = useSelector(state => state.user.loggedUser)
- const rubrosfil = useSelector((state) => state.rubrosSlice.rubros);
+ const todosLosRubros = useSelector((state) => state.rubrosSlice.rubros);
+ console.log(`useSelector ${todosLosRubros}`)
 
 
   const dispatch = useDispatch();
 
   //states
 
-  const [rubroFiltrado, setRubrosFiltrados] = useState([]);
+  const [rubroFiltrado, setRubrosFil] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
 
   
@@ -31,26 +32,27 @@ const AgregarGasto = () => {
 
 
   const inputTotal = useRef();
-  let filtrados = {};
 
   //funciones
   const changeTipo = () => {
-    setRubrosFiltrados(inputTipo.current.value)
-    console.log(`el rubro es: ${inputTipo.current.value} + ${rubroFiltrado}`)
-    filtrados = rubrosfil.filter(filtrados=> filtrados.tipo == rubroFiltrado)
-    setRubrosFiltrados(filtrados)
+    const valorRubro = (inputTipo.current.value)
+    console.log(`valor rubro ${valorRubro}`)
+      const filtradosI = todosLosRubros.filter(todos => todos.tipo == valorRubro)
+      dispatch(setFilteredRubros(filtradosI))
+      dispatch(setRubrosFil(filtradosI))
+
+
 
 
       
   }
 
   useEffect(() => {
-    console.log(`La key ${user.apiKey}`)
     rubros(user.apiKey)
       .then(data => {
-        console.log(`lo que recibo ${data}`)
-        dispatch(setRubros(data))
-        dispatch(setFilteredRubros(data))
+        console.log(`lo que recibo ${data.rubros}`)
+        dispatch(setRubros(data.rubros))
+        dispatch(setFilteredRubros(data.rubros))
       })
       .catch(e => console.error('Ha ocurrido un error no llego a rubro'))
   }, [rubroFiltrado])
@@ -106,8 +108,8 @@ const AgregarGasto = () => {
       <select className="form-control " onChange={changeTipo} ref ={inputTipo}>
     
         <option defaultValue>Tipo de operacion</option>
-        <option value="ingreso">Ingreso</option>
-        <option value="gasto">Gasto</option>
+        <option value={`ingreso`}>Ingreso</option>
+        <option value={`gasto`}>Gasto</option>
 
       </select>
 
