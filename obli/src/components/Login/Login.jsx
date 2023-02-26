@@ -54,6 +54,7 @@ const LoginForm = () => {
           navigator('/dashboard')
         })
         .catch(e => {
+          console.log(e)
           showError()
         })
     } else {

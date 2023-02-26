@@ -4,7 +4,7 @@ import './TablaMovimientos.css'
 
 const TablaMovimientos = () => {
   const movs = useSelector(state => state.movimientosSlice.filteredMovimientos)
-  console.log(movs)
+  //console.log(movs)
   return (
     <>
       <table className='table table-hover'>
@@ -21,15 +21,16 @@ const TablaMovimientos = () => {
           </tr>
         </thead>
         <tbody>
-          {movs.map(({ id, concepto, categoria, medio, total, fecha, idUsuario }) => (
+          {movs.map(({id, concepto, categoria, medio, total, fecha, idUsuario}) => (
             <Rows
-              key={id}
+              movId={id}
               concepto={concepto}
               categoria={categoria}
               medio={medio}
               total={total}
               fecha={fecha}
               idUsuario={idUsuario}
+              key={id}
             />
           ))}
         </tbody>

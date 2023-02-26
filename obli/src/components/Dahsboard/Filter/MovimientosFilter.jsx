@@ -13,11 +13,11 @@ const MovimientosFilter = () => {
     if (filter === 0) {
       // Ingresos
       const ingresos = movs.filter(movimiento => movimiento.total > 0)
-      dispatch(setFilteredMovimientoss(movs))
+      dispatch(setFilteredMovimientoss(ingresos))
     } else if (filter === 1) {
       // Gastos
       const gastos = movs.filter(movimiento => movimiento.total < 0)
-      dispatch(setFilteredMovimientoss(movs))
+      dispatch(setFilteredMovimientoss(gastos))
     } else {
       dispatch(setFilteredMovimientoss(movs))
     }

@@ -65,16 +65,16 @@ const departamento = async () => {
   }
 };
 
-const deleteMovimiento = async(idMovimiento) => {
-  const response = await fetch(`${BASE_URL}/movimientos.php?idMovimiento=${idMovimiento}`, {
+const deleteMovimiento = async(idMovimiento, auth) => {
+  const response = await fetch(`${BASE_URL}/movimientos.php`, {
     method: 'DELETE',
     headers: {
       'Content-type': 'application/json',
-      'apikey' : 'e7d52278a3927bdd5923d825320a1cad',
+      'apikey' : auth,
     },
-    body: {
-      "idMovimiento": idMovimiento
-    },
+    body: JSON.stringify({
+      idMovimiento: idMovimiento
+    }),
   });
   if (response.status === 200) {
     return response.json();
