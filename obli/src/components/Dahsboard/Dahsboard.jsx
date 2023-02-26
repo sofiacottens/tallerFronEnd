@@ -2,13 +2,14 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilteredMovimientoss, setMovimientos } from '../../app/slices/movimientosSlice'
 import { getMovimientos } from '../../services/Api/Api'
-import AgregarGasto from './AgregarGasto/AgregarGasto'
+import AgregarGasto from './Agregar/AgregarGasto'
 //import Charts from './Charts'
 import './Dashboard.css'
 import MovimientosFilter from './Filter/MovimientosFilter'
 import Header from './Header/Header'
 //import Metrics from './Metrics'
 import TablaMovimientos from './TablaMovimientos/TablaMovimientos'
+import '../App/App.css'
 
 const Dashboard = () => {
   const user = useSelector(state => state.user.loggedUser)
@@ -31,7 +32,7 @@ const Dashboard = () => {
       <div className='card'>
         <div className='card-body'>
           <h5 className='card-title'>Agregar un nuevo gasto</h5>
-          <AgregarGasto />
+          <AgregarGasto></AgregarGasto>
         </div>
       </div>
       <div className='card'>

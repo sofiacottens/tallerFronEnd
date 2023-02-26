@@ -1,10 +1,12 @@
 import '../../services/Api/Api'
 import { Registro } from '../../services/Api/Api'
-import { departamento } from '../../services/Api/Api';
-import { ciudad } from '../../services/Api/Api';
+import { departamento , ciudad, login} from '../../services/Api/Api';
 import {  useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { setRegisterUser } from '../../app/slices/userSlice';
+import { useDispatch } from 'react-redux';
+import { setRegisterUser, setLoginUser } from '../../app/slices/userSlice';
+import { Navigate, useNavigate } from 'react-router-dom';
+
+
 
 
 const Registrarse = () => {
@@ -17,6 +19,8 @@ const Registrarse = () => {
     const [laCiudad, cambiarCiudad] = useState(0);
     const [alerta, setAlerta] = useState(false)
     const [error, setError] = useState("")
+    const navigator = useNavigate()
+
 
 
 
@@ -99,47 +103,48 @@ const Registrarse = () => {
             const data = Registro(datos.usuario, datos.pass, datos.idDepartamento, datos.idCiudad);
             const user = { apiKey: data.apiKey, id: data.id }
             dispatch(setRegisterUser(user));
-            navigator("/dashboard");
+           
+        navigator("/dashboard");       
         }catch({ message }){
             showError(message)
         }
     }
 
+
     return (
        
         <>
         <h1 className="container col-3 mt-4 mb-4 mx-auto text-center">Register</h1>
-        <form className="container col-3">
+        <form id="formRegistro"className="container col-5">
             <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="userNameRegister" >Usuario</label>
+                <label className="form-label my-2 my-sm-3" htmlFor="userNameRegister" >Usuario</label>
                 <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="usuario"onChange= { changeUserName }></input>
             </div>
             <div className="form-outline mb-4">
                 <label className="form-label" htmlFor="passwordRegister" >Password</label>
                 <input type="password" className="form-control" id="idPassword" placeholder="Password" onChange= { changePassword }></input>
             </div>
-            <div className="form-group">
-                <label htmlFor="exampleFormControlSelect1">Deparamento</label>
+            <div className="form-outline mb-4">
+                <label className="form-label" htmlFor="exampleFormControlSelect1">Deparamento</label>
                 <select className="form-control" id="exampleFormControlSelect1" onChange= { changeDepartamento }>
+                <option defaultValue>Seleccione un departamento</option>
 
                     {departamentos.map(({ id, nombre }) => (
             <option value={id }>{nombre}</option>))}
                 </select>
             </div>
-            <div className="form-group">
-                <label htmlFor="exampleFormControlSelect1">Ciudad</label>
+            <div className="form-outline mb-4">
+                <label className="form-label" htmlFor="exampleFormControlSelect1">Ciudad</label>
                 <select className="form-control" id="exampleFormControlSelect1" onChange= { changeCiudad }>
-                <option defaultValue>Seleccione tipo de operación</option>
+                <option defaultValue>Seleccione una ciudad</option>
                     {ciudades.map(({ id, nombre }) => (
             <option value={id }>{nombre}</option>))}
                 </select>
             </div>
-            <div className="form-group">
-                <button className="btn btn-primary" type="button" onClick={ submitRegister }>Registrarme</button>
+            <div className="form-outline mb-4">
+                <button className="btn my-2 my-sm-3" type="button" onClick={ submitRegister }>Registrarme</button>
             </div>
 
-          
-          
             
           
           {alerta ? (

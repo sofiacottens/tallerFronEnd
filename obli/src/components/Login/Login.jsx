@@ -63,11 +63,11 @@ const LoginForm = () => {
 
   return (
     
-    <>
+    <>  
             <h1 className="container col-3 mt-4 mb-4 mx-auto text-center">Login</h1>
-            <form className="container col-3">
+            <form className="container col-5">
                 <div className="form-outline mb-4">
-                    <label className="form-label" htmlFor="usuarioLogin">Usuario</label>
+                    <label className="form-label my-2 my-sm-3" htmlFor="usuarioLogin">Usuario</label>
             <input
               className='form-control'
               type='text'
@@ -88,7 +88,7 @@ const LoginForm = () => {
           </div>
           <div className="form-outline d-grid">
             <button
-              className="btn btn-primary" type="button" 
+              className="btn" type="button" 
               onClick={onSignInClick}
               disabled={btnDisabled}
             >
@@ -103,6 +103,13 @@ const LoginForm = () => {
           ) : (
             ''
           )}
+
+        <div className="form-outline d-grid">
+          <nav class="nav" >
+              <a className=" my-2 my-sm-3"  href="/registro">Registrarse</a>
+           </nav>
+            
+          </div>
        
         </form>
 
