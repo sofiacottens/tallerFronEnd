@@ -102,7 +102,6 @@ const AgregarGasto = () => {
         dispatch(addMovimiento(data.movimiento));
         alert(data.mensaje);
         console.log(`movimiento ${data.movimiento}`)
-        navigator("/dashboard");
       }).catch(e => console.error("Ha ocurrido un error en la petición"))
 
 
@@ -111,13 +110,7 @@ const AgregarGasto = () => {
 
   return (
     <form >
-      <div className="card-group">
-        <div className="card">
-          <div className="card-body">
-            <h5 className="card-title">Agregar Gasto</h5>
-            <label htmlFor="cantidadUnidades">Tipo de operacion</label>
-            <select className="form-control " onChange={changeTipo} ref={inputTipo}>
-
+    
 
               <div class="card-group">
                 <div class="card">
@@ -132,24 +125,14 @@ const AgregarGasto = () => {
 
                     </select>
 
-                    <select className="form-control " id="exampleFormControlSelect1" ref={inputRubro} onChange={changeRubro}>
+                    <select className="form-control " id="exampleFormControlSelect1" ref={inputRubro} >
                       {rubroFiltrado.map(({ id, nombre }) => (
                         <option value={id}>{nombre}</option>))}
 
                     </select>
                     <label htmlFor="cantidadUnidades">Concepto del gasto:</label>
                     <input type="text" id="conceptoGasto" className="form-control" ref={inputConcepto} />
-                    <select className="form-control" ref={inputMedio} >
-                      <option defaultValue>Seleccione el medio</option>
-                    </select>
-
-                    <select className="form-control my-2 my-sm-3" id="exampleFormControlSelect1" ref={inputRubro}  >
-                      {rubroFiltrado.map(({ id, nombre }) => (
-                        <option key={id} value={id}>{nombre}</option>))}
-
-                    </select>
-                    <label htmlFor="cantidadUnidades">Concepto del gasto:</label>
-                    <input type="text" id="conceptoGasto" className="form-control my-2 my-sm-3" ref={inputConcepto} />
+                 
                     <label htmlFor="cantidadUnidades">Medio</label>
                     <select className="form-control" ref={inputMedio} >
                       <option value={"Efectivo"}>Efectivo</option></select>
@@ -162,10 +145,7 @@ const AgregarGasto = () => {
                 </div>
 
               </div>
-            </select>
-          </div>
-        </div>
-      </div>
+       
     </form>
   )
 }
