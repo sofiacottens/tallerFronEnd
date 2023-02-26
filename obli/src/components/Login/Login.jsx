@@ -15,9 +15,9 @@ const LoginForm = () => {
   const navigator = useNavigate()
 
   const user = useSelector(state => state.user.loggedUser)
-  //if (user) {
-    //return <Navigate to='/dashboard' replace={true} />
-  //}
+  if (user) {
+    return <Navigate to='/dashboard' replace={true} />
+  }
 
   const showError = () => {
     setError(true)
@@ -62,58 +62,58 @@ const LoginForm = () => {
   }
 
   return (
-    
-    <>  
-            <h1 className="container col-3 mt-4 mb-4 mx-auto text-center">Login</h1>
-            <form className="container col-5">
-                <div className="form-outline mb-4">
-                    <label className="form-label my-2 my-sm-3" htmlFor="usuarioLogin">Usuario</label>
-            <input
-              className='form-control'
-              type='text'
-              placeholder='User name'
-              ref={inputUsername}
-              onChange={validateForm}
-            />
-          </div>
-          <div className="form-outline mb-4">
-            <label className="form-label" htmlFor="passwordLogin">Password</label>
-            <input
-              className='form-control'
-              type='password'
-              placeholder='Password'
-              ref={inputPass}
-              onChange={validateForm}
-            />
-          </div>
-          <div className="form-outline d-grid">
-            <button
-              className="btn" type="button" 
-              onClick={onSignInClick}
-              disabled={btnDisabled}
-            >
-              Sign in
-            </button>
-          </div>
 
-          {error ? (
-            <div className='alert alert-danger' role='alert'>
-              Ha ocurrido un error!
-            </div>
-          ) : (
-            ''
-          )}
+    <>
+      <h1 className="container col-3 mt-4 mb-4 mx-auto text-center">Login</h1>
+      <form className="container col-5">
+        <div className="form-outline mb-4">
+          <label className="form-label my-2 my-sm-3" htmlFor="usuarioLogin">Usuario</label>
+          <input
+            className='form-control'
+            type='text'
+            placeholder='User name'
+            ref={inputUsername}
+            onChange={validateForm}
+          />
+        </div>
+        <div className="form-outline mb-4">
+          <label className="form-label" htmlFor="passwordLogin">Password</label>
+          <input
+            className='form-control'
+            type='password'
+            placeholder='Password'
+            ref={inputPass}
+            onChange={validateForm}
+          />
+        </div>
+        <div className="form-outline d-grid">
+          <button
+            className="btn" type="button"
+            onClick={onSignInClick}
+            disabled={btnDisabled}
+          >
+            Sign in
+          </button>
+        </div>
+
+        {error ? (
+          <div className='alert alert-danger' role='alert'>
+            Ha ocurrido un error!
+          </div>
+        ) : (
+          ''
+        )}
 
         <div className="form-outline d-grid">
           <nav class="nav" >
-              <a className=" my-2 my-sm-3"  href="/registro">Registrarse</a>
-           </nav>
-            
-          </div>
-       
-        </form>
+            <a className=" my-2 my-sm-3" href="/registro">Registrarse</a>
+          </nav>
 
-</>
+        </div>
+
+      </form>
+
+    </>
   )
 }
 
