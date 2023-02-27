@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addMovimiento } from '../../../app/slices/movimientosSlice'
 import { agregarMovimiento, rubros } from '../../../services/Api/Api'
 import { setFilteredRubros, setRubros } from '../../../app/slices/rubrosSlice'
-import { setFilteredMedios, setMedios } from '../../../app/slices/mediosSlice'
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,9 +12,6 @@ const AgregarGasto = () => {
   //Redux States
   const user = useSelector(state => state.user.loggedUser)
   const todosLosRubros = useSelector((state) => state.rubrosSlice.rubros);
-  const todosLosMedios = useSelector((state) => state.mediosSlice.medios);
-  //console.log(`todos los medios ${todosLosMedios}`)
-
 
   const dispatch = useDispatch();
 
@@ -46,7 +42,6 @@ const AgregarGasto = () => {
     dispatch(setRubrosFil(filtradosR))
     dispatch(setFilteredRubros(filtradosR))
     dispatch(setMedioFil(filtradosM))
-    dispatch(setFilteredMedios(filtradosM))
   }
 
   useEffect(() => {
@@ -93,12 +88,14 @@ const AgregarGasto = () => {
       categoria: rubro,
       total: total,
       medio: medio,
-      fecha: fecha
+      fecha: fecha,
+      id: null
 
     }
     agregarMovimiento(datos, user.apiKey, user.idUsuario)
       .then(data => {
-        dispatch(addMovimiento(data.movimiento));
+        datos.id = data.idMovimiento
+        dispatch(addMovimiento(datos.movimiento));
         alert(data.mensaje);
         console.log(`movimiento ${data.movimiento}`)
       }).catch(e => console.error("Ha ocurrido un error en la petición: " + e))
@@ -138,6 +135,7 @@ const AgregarGasto = () => {
             <label className="form-label my-2   " htmlFor="cantidadUnidades">Total:</label>
             <input type="number" id="total" className="form-control my-2 my-sm-3" ref={inputTotal} />
 
+            <input type="date"></input>
             <DatePicker ref={inputDate} selected={startDate} onChange={(date) => setStartDate(date)} />
             <button className="btn btn-primary my-2 my-sm-3" type="button" onClick={crearMovimiento} >Crear Registro</button>
 
