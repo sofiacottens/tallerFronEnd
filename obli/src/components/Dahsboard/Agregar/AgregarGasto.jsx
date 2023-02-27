@@ -40,13 +40,46 @@ const AgregarGasto = () => {
   const changeTipo = () => {
     const valorRubro = (inputTipo.current.value)
     //console.log(`valor rubro ${valorRubro}`)
-    const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro)
-    const filtradosM = todosLosMedios.filter(todosM => todosM.tipo == valorRubro)
+    if (valorRubro == "ingreso") {
+      const mediosI = [
+        {
+          nombre: 'Efectivo',
+          tipo: 'gasto'
+        },
+        {
+          nombre: 'Banco',
+          tipo: 'gasto'
+        },]
+      dispatch(setMedioFil(mediosI))
+      const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro)
+      dispatch(setRubrosFil(filtradosR))
+      dispatch(setFilteredRubros(filtradosR))
+    }
+    if (valorRubro == "gasto") {
+      const mediosI = [
+        {
+          nombre: 'Efectivo',
+          tipo: 'gasto'
+        },
+        {
+          nombre: 'Débito',
+          tipo: 'gasto'
+        },
+        {
+          nombre: 'Crédito',
+          tipo: 'gasto'
+        },]
+      dispatch(setMedioFil(mediosI))
+      const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro)
+      dispatch(setRubrosFil(filtradosR))
+      dispatch(setFilteredRubros(filtradosR))
+    }
+    // const filtradosM = todosLosMedios.filter(todosM => todosM.tipo == valorRubro)
     //console.log(`todos los medios ${filtradosM}`)
-    dispatch(setRubrosFil(filtradosR))
+    /*dispatch(setRubrosFil(filtradosR))
     dispatch(setFilteredRubros(filtradosR))
     dispatch(setMedioFil(filtradosM))
-    dispatch(setFilteredMedios(filtradosM))
+    dispatch(setFilteredMedios(filtradosM))*/
   }
 
   useEffect(() => {
@@ -90,12 +123,14 @@ const AgregarGasto = () => {
       categoria: rubro,
       total: total,
       medio: medio,
-      fecha: fecha
+      fecha: fecha,
+      id: null,
 
     }
     agregarMovimiento(datos, user.apiKey, user.idUsuario)
       .then(data => {
-        dispatch(addMovimiento(data.movimiento));
+        datos.id = data.idMovimiento
+        dispatch(addMovimiento(datos.movimiento));
         alert(data.mensaje);
         console.log(`movimiento ${data.movimiento}`)
       }).catch(e => console.error("Ha ocurrido un error en la petición: " + e))
@@ -128,14 +163,14 @@ const AgregarGasto = () => {
 
             <select className="form-control" ref={inputMedio} >
               <option defaultValue>Seleccione el medio</option>
-              {medioFiltrado.map(({nombre }) => (
+              {medioFiltrado.map(({ nombre }) => (
                 <option key={nombre} value={nombre}>{nombre}</option>))}
             </select>
 
             <label className="form-label my-2   " htmlFor="cantidadUnidades">Total:</label>
             <input type="number" id="total" className="form-control my-2 my-sm-3" ref={inputTotal} />
 
-            <DatePicker ref={inputDate} selected={startDate} onChange={(date) => setStartDate(date)} />
+            <input type="date" className="form-control" ref={inputDate}/><br />
             <button className="btn btn-primary my-2 my-sm-3" type="button" onClick={crearMovimiento} >Crear Registro</button>
 
           </div>

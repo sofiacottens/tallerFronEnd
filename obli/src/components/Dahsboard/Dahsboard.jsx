@@ -40,7 +40,7 @@ const Dashboard = () => {
         <div className='card-body'>
           <MovimientosFilter />
           <br />
-          {movs.length > 0 ? <TablaMovimientos /> : ('No se encontraron movimientos para el usuario ' + <img src={sad} height="30" width="40" alt=''/>)}
+          {movs.length > 0 ? <TablaMovimientos /> : <><p>No se encontraron movimientos para el usuario </p>  <img src={sad} height="30" width="40" alt=''/></>}
         </div>
         <div className='card'>
         <div className='card-body'>
