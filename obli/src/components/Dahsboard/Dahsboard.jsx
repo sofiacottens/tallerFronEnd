@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setFilteredMovimientoss, setMovimientos } from '../../app/slices/movimientosSlice'
 import { getMovimientos } from '../../services/Api/Api'
 import AgregarGasto from './Agregar/AgregarGasto'
-import Charts from './../Charts/Charts'
+import Charts from '../Dahsboard/Charts/Charts'
 import './Dashboard.css'
 import MovimientosFilter from './Filter/MovimientosFilter'
 import Header from './Header/Header'
@@ -46,7 +46,6 @@ const Dashboard = () => {
         <div className='card'>
         <div className='card-body'>
           <h5 className='card-title'>Graficas</h5>
-          <Charts></Charts>
         </div>
       </div>
       </div>
