@@ -14,8 +14,7 @@ const AgregarGasto = () => {
   const user = useSelector(state => state.user.loggedUser)
   const todosLosRubros = useSelector((state) => state.rubrosSlice.rubros);
   const todosLosMedios = useSelector((state) => state.mediosSlice.medios);
-  console.log(`todos los medios ${todosLosMedios}`)
-
+  //console.log(`todos los medios ${todosLosMedios}`)
 
 
   const dispatch = useDispatch();
@@ -40,10 +39,10 @@ const AgregarGasto = () => {
   //funciones
   const changeTipo = () => {
     const valorRubro = (inputTipo.current.value)
-    console.log(`valor rubro ${valorRubro}`)
+    //console.log(`valor rubro ${valorRubro}`)
     const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro)
     const filtradosM = todosLosMedios.filter(todosM => todosM.tipo == valorRubro)
-    console.log(`todos los medios ${filtradosM}`)
+    //console.log(`todos los medios ${filtradosM}`)
     dispatch(setRubrosFil(filtradosR))
     dispatch(setFilteredRubros(filtradosR))
     dispatch(setMedioFil(filtradosM))
@@ -53,11 +52,11 @@ const AgregarGasto = () => {
   useEffect(() => {
     rubros(user.apiKey)
       .then(data => {
-        console.log(`lo que recibo ${data.rubros}`)
+        //console.log(`lo que recibo ${data.rubros}`)
         dispatch(setRubros(data.rubros))
         dispatch(setFilteredRubros(data.rubros))
       })
-      .catch(e => console.error('Ha ocurrido un error no llego a rubro'))
+      .catch(e => console.error('Ha ocurrido un error: ' + e))
   }, [rubroFiltrado])
 
 
@@ -75,15 +74,15 @@ const AgregarGasto = () => {
       alert("Debe ingresar un valor mayor a 0");
       return;
     }
-    if (medio == null) {
+    if (medio === null) {
       alert("Debe elegir un medio");
       return;
     }
-    if (concepto == null) {
+    if (concepto === null) {
       alert("Debe ingresar un concepto");
       return;
     }
-    if (concepto == null) {
+    if (concepto === null) {
       alert("Debe seleccionar una fecha");
       return;
     }
@@ -102,7 +101,7 @@ const AgregarGasto = () => {
         dispatch(addMovimiento(data.movimiento));
         alert(data.mensaje);
         console.log(`movimiento ${data.movimiento}`)
-      }).catch(e => console.error("Ha ocurrido un error en la petición"))
+      }).catch(e => console.error("Ha ocurrido un error en la petición: " + e))
 
 
 
@@ -114,39 +113,31 @@ const AgregarGasto = () => {
       <div className="card-group">
         <div className="card">
           <div className="card-body">
-            <h5 className="card-title">Agregar Gasto</h5>
-            <label htmlFor="cantidadUnidades">Tipo de operacion</label>
-            <select className="form-control my-2 my-sm-3 " onChange={changeTipo} ref={inputTipo}>
+            <h5 className="card-title">Agregar Movimiento</h5>
 
+            <select className="form-control my-2 my-sm-3 " onChange={changeTipo} ref={inputTipo}>
               <option defaultValue>Tipo de operacion</option>
               <option value="ingreso">Ingreso</option>
               <option value="gasto">Gasto</option>
-
             </select>
 
             <select className="form-control " id="exampleFormControlSelect1" ref={inputRubro} onChange={changeRubro}>
               {rubroFiltrado.map(({ id, nombre }) => (
-                <option value={id}>{nombre}</option>))}
-
+                <option key={id} value={id}>{nombre}</option>))}
+              <option defaultValue>Seleccione el rubro</option>
             </select>
-            <label htmlFor="cantidadUnidades">Concepto del gasto:</label>
-            <input type="text" id="conceptoGasto" className="form-control" ref={inputConcepto} />
+
+            <input type="text" id="conceptoGasto" placeholder='Concepto' className="form-control my-2 my-sm-3" ref={inputConcepto} />
+
             <select className="form-control" ref={inputMedio} >
               <option defaultValue>Seleccione el medio</option>
+              <option value={"Efectivo"}>Efectivo</option>
+              <option value={"Banco"}>Banco</option>
             </select>
 
-            <select className="form-control my-2 my-sm-3" id="exampleFormControlSelect1" ref={inputRubro}  >
-              {rubroFiltrado.map(({ id, nombre }) => (
-                <option key={id} value={id}>{nombre}</option>))}
-
-            </select>
-            <label htmlFor="cantidadUnidades">Concepto del gasto:</label>
-            <input type="text" id="conceptoGasto" className="form-control my-2 my-sm-3" ref={inputConcepto} />
-            <label htmlFor="cantidadUnidades">Medio</label>
-            <select className="form-control" ref={inputMedio} >
-              <option value={"Efectivo"}>Efectivo</option></select>
             <label className="form-label my-2   " htmlFor="cantidadUnidades">Total:</label>
             <input type="number" id="total" className="form-control my-2 my-sm-3" ref={inputTotal} />
+
             <DatePicker ref={inputDate} selected={startDate} onChange={(date) => setStartDate(date)} />
             <button className="btn btn-primary my-2 my-sm-3" type="button" onClick={crearMovimiento} >Crear Registro</button>
 

@@ -1,31 +1,43 @@
-import { useSelector } from 'react-redux'
 import Bar from './Bar'
 import Pie from './Pie'
-import calculoPorRubro from './calculos'
+import { CalculateIngresosXrubro, CalculateGastosXrubro, CalculateEvolucionGastos } from '../Charts/calculos'
 
 const Charts = () => {
-  const movs = useSelector(state => state.movimientosSlice.movimientos)
 
-  const _calculateCompleted = () => {
-    return movs.filter(todo => todo.completed).length
+  const _calculateIngresosXrubro = () => {
+    return CalculateIngresosXrubro();
   }
 
-  const _calculateIncomplete = () => {
-    return movs.filter(todo => !todo.completed).length
+  const _calculateGastosXrubro = () => {
+    return CalculateGastosXrubro();
   }
+
+  const _calculateEvolucionGastos = () => {
+    return CalculateEvolucionGastos();
+  }
+
   return (
     <div className='container metrics'>
-      <h5>METRICS</h5>
+      <h5>Graficas</h5>
       <div className='row'>
-        <div className='col-8'>
-        </div>
-        <div className='col-4'>
+        <div className='col-6'>
           <div className='card'>
             <div className='card-body'>
-              <Pie
-                completed={_calculateCompleted()}
-                incompleted={_calculateIncomplete()}
-              />
+              <Pie dataChart={_calculateIngresosXrubro()}/>
+            </div>
+          </div>
+        </div>
+        <div className='col-6'>
+          <div className='card'>
+            <div className='card-body'>
+              <Pie dataChart={_calculateGastosXrubro()}/>
+            </div>
+          </div>
+        </div>
+        <div className='col-12'>
+          <div className='card'>
+            <div className='card-body'>
+              <Bar dataChart={_calculateEvolucionGastos()}/>
             </div>
           </div>
         </div>

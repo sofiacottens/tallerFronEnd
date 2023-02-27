@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { setLoginUser } from '../../app/slices/userSlice.js';
 import { login } from '../../services/Api/Api';
+import loginLogo from './loginLogo.png'
+import hello from './hello.png'
 
 const LoginForm = () => {
   const [error, setError] = useState(false)
@@ -65,7 +67,7 @@ const LoginForm = () => {
   return (
 
     <>
-      <h1 className="container col-3 mt-4 mb-4 mx-auto text-center">Login</h1>
+      <h1 className="container col-3 mt-4 mb-4 mx-auto text-center"><img src={hello} alt=''/></h1>
       <form className="container col-5">
         <div className="form-outline mb-4">
           <label className="form-label my-2 my-sm-3" htmlFor="usuarioLogin">Usuario</label>
@@ -88,12 +90,9 @@ const LoginForm = () => {
           />
         </div>
         <div className="form-outline d-grid">
-          <button
-            className="btn" type="button"
-            onClick={onSignInClick}
-            disabled={btnDisabled}
-          >
-            Sign in
+          <button className="btn" type="button" onClick={onSignInClick} disabled={btnDisabled}>
+            Login 
+           <img src={loginLogo} height="30" width="30" alt=''/>
           </button>
         </div>
 

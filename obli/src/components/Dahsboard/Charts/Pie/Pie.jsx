@@ -1,13 +1,59 @@
 import ReactApexChart from 'react-apexcharts'
-const Pie = ({ completed, incompleted }) => {
+
+const Pie = (dataChart) => {
+
+  let nuevaArrData = []
+  let dataSerie = [];
+  let dataLabels = [];
+
+  if(dataChart != undefined){
+    nuevaArrData = dataChart.dataChart;
+  }
+
+  nuevaArrData.forEach(element => {
+    dataSerie.push(element.monto);
+    dataLabels.push(element.rubro);
+  });
+
+  dataSerie = [...new Set(dataSerie)];
+  dataLabels = [...new Set(dataLabels)];
+
   const data = {
-    series: [completed, incompleted],
+    series: dataSerie,
     options: {
       chart: {
         height: 350,
-        type: 'pie'
+        type: 'polarArea'
       },
-      labels: ['Completed', 'Incompleted'],
+      fill: {
+        opacity: 1
+      },
+      stroke: {
+        width: 1,
+        colors: undefined
+      },
+      yaxis: {
+        show: false
+      },
+      plotOptions: {
+        polarArea: {
+          rings: {
+            strokeWidth: 0
+          },
+          spokes: {
+            strokeWidth: 0
+          },
+        }
+      },
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: '#CD5888',
+          shadeTo: 'light',
+          shadeIntensity: 0.6
+        }
+      },
+      labels: dataLabels,
       legend: {
         position: 'bottom'
       }

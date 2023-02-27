@@ -1,52 +1,47 @@
 
-const calculoPorRubro = (movimientos, rubros) => {
-    
-  let nombreRubro = [];
-  let montoPorRubro = [];
-  
-  if(movimientos && rubros){
-    for(const i = 0; i< rubros.length(); i++){
-      const suma = 0;
-      const elRubro = rubros[i];
-      nombreRubro.push(elRubro.nombre);
-      for(const j = 0; j<movimientos.length(); j++){
-        const elmov = movimientos[i];
-        if(elmov.rubro == elRubro.id){
-          suma++;
-        }
-        montoPorRubro.push(suma);
-        console.log(`la suma ${montoPorRubro}`)
+import { useSelector } from 'react-redux';
+
+const CalculateIngresosXrubro = () => {
+  const ret = []
+  const todosLosRubros = useSelector(state => state.rubrosSlice.rubros);
+  const movs = useSelector(state => state.movimientosSlice.filteredMovimientos);
+  const ingresos = movs.filter(movimiento => movimiento.total > 0);
+
+  todosLosRubros.forEach(r => {
+    let suma = 0;
+    ingresos.forEach(i => {
+      if (i.categoria === r.id) {
+        suma += i.total;
       }
-    }
-  } 
-    const datos = {
-      series: [{
-        data: montoPorRubro
-      }],
-      options: {
-        chart: {
-          type: 'bar',
-          height: 350
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 4,
-            horizontal: true,
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        xaxis: {
-          categories: nombreRubro,
-        }
-      },
-  }
+      ret.push({ rubro: r.nombre, monto: suma })
+    });
+  });
 
-  return datos;
+  return ret;
 
+}
 
-  }
+const CalculateGastosXrubro = () => {
+  const ret = []
+  const todosLosRubros = useSelector(state => state.rubrosSlice.rubros);
+  const movs = useSelector(state => state.movimientosSlice.filteredMovimientos);
+  const gastos = movs.filter(movimiento => movimiento.total < 0);
 
+  todosLosRubros.forEach(r => {
+    let suma = 0;
+    gastos.forEach(i => {
+      if (i.categoria === r.id) {
+        suma += i.total;
+      }
+      ret.push({ rubro: r.nombre, monto: suma })
+    });
+  });
 
-  export default {calculoPorRubro}
+  return ret;
+}
+
+const CalculateEvolucionGastos = () =>{
+  
+}
+
+export { CalculateIngresosXrubro, CalculateGastosXrubro, CalculateEvolucionGastos};

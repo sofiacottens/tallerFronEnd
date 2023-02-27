@@ -87,8 +87,8 @@ const deleteMovimiento = async(idMovimiento, auth) => {
 }
 
 const getMovimientos = async (idUsuario, auth) => {
-  console.log(auth)
-  console.log(idUsuario)
+  //console.log(auth)
+  //console.log(idUsuario)
   //token user dwallet 3 a2e05e04d264fb88978860a999fe0716
   const response = await fetch(`${BASE_URL}/movimientos.php?idUsuario=${idUsuario}`,{
     method: 'GET',
@@ -153,7 +153,7 @@ const agregarMovimiento = async (data, auth, idUsuario) => {
   });
 
   if (response.status === 200) {
-    console.log(`Agrego OK ${data.concepto}`)
+    //console.log(`Agrego OK ${data.concepto}`)
     return response.json();
   } else {
     return Promise.reject({
@@ -174,9 +174,9 @@ const rubros = async (auth) => {
   });
 
   if (response.status === 200) {
-    console.log(`llegas pero no, ${auth}`)
-    
+    //console.log(`llegas pero no, ${auth}`)
     return response.json()
+
   } else {
     return Promise.reject({
       status: response.status,

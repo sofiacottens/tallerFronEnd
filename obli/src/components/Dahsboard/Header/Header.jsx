@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setLogoutUser } from '../../../app/slices/userSlice'
 import ButtonLogout from './BtnSalir/BtnSalir'
-import logo from './logo.svg'
+import logo from '../Header/logo.png'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -16,7 +16,7 @@ const Header = () => {
   }
   return (
     <header >
-
+        <img src={logo} height="30" width="40" alt=''/>
         <ButtonLogout onLogout={onLogout} />
     </header>
   )

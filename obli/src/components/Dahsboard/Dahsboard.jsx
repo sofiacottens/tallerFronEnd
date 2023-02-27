@@ -10,6 +10,7 @@ import Header from './Header/Header'
 //import Metrics from './Metrics'
 import TablaMovimientos from './TablaMovimientos/TablaMovimientos'
 import '../App/App.css'
+import sad from '../Dahsboard/sad.png'
 
 const Dashboard = () => {
   const user = useSelector(state => state.user.loggedUser)
@@ -25,7 +26,6 @@ const Dashboard = () => {
       })
       .catch(e => console.error('Ha ocurrido un error: ' + e))
   }, [])
-
   
 
   return (
@@ -33,7 +33,6 @@ const Dashboard = () => {
       <Header />
       <div className='card'>
         <div className='card-body'>
-          <h5 className='card-title'>Agregar un nuevo gasto</h5>
           <AgregarGasto></AgregarGasto>
         </div>
       </div>
@@ -41,15 +40,16 @@ const Dashboard = () => {
         <div className='card-body'>
           <MovimientosFilter />
           <br />
-          {movs.length > 0 ? <TablaMovimientos /> : 'Loading...'}
+          {movs.length > 0 ? <TablaMovimientos /> : ('No se encontraron movimientos para el usuario ' + <img src={sad} height="30" width="40" alt=''/>)}
         </div>
         <div className='card'>
         <div className='card-body'>
-          <h5 className='card-title'>Graficas</h5>
+          <Charts/>
         </div>
       </div>
       </div>
     </>
   )
 }
+
 export default Dashboard
