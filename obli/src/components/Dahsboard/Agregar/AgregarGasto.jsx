@@ -59,9 +59,6 @@ const AgregarGasto = () => {
       .catch(e => console.error('Ha ocurrido un error: ' + e))
   }, [rubroFiltrado])
 
-
-  const changeRubro = () => { }
-
   const crearMovimiento = async () => {
     const rubro = inputRubro.current.value;
     const medio = inputMedio.current.value;
@@ -121,7 +118,7 @@ const AgregarGasto = () => {
               <option value="gasto">Gasto</option>
             </select>
 
-            <select className="form-control " id="exampleFormControlSelect1" ref={inputRubro} onChange={changeRubro}>
+            <select className="form-control " id="exampleFormControlSelect1" ref={inputRubro}>
               {rubroFiltrado.map(({ id, nombre }) => (
                 <option key={id} value={id}>{nombre}</option>))}
               <option defaultValue>Seleccione el rubro</option>
@@ -131,8 +128,8 @@ const AgregarGasto = () => {
 
             <select className="form-control" ref={inputMedio} >
               <option defaultValue>Seleccione el medio</option>
-              <option value={"Efectivo"}>Efectivo</option>
-              <option value={"Banco"}>Banco</option>
+              {medioFiltrado.map(({nombre }) => (
+                <option key={nombre} value={nombre}>{nombre}</option>))}
             </select>
 
             <label className="form-label my-2   " htmlFor="cantidadUnidades">Total:</label>

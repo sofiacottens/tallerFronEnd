@@ -4,8 +4,21 @@ const Bar = (chartData) => {
   let meses = [];
   let fecha = new Date();
   let mesActual = fecha.getMonth();
-  console.log(mesActual);
+
   meses.push(mesActual);
+  for (let init = 1; init < 24; init++) {
+    if (mesActual < 11) {
+      mesActual++;
+    } else {
+      mesActual = 0;
+    }
+    meses.push(mesActual);
+  }
+
+  let mesesNombre = cambiarMeses(meses);
+
+  console.log(meses)
+  console.log(mesesNombre)
 
   const data = {
     series: [{
@@ -36,7 +49,7 @@ const Bar = (chartData) => {
         enabled: false
       },
       stroke: {
-        width: 2
+        width: 1
       },
 
       grid: {
@@ -46,12 +59,10 @@ const Bar = (chartData) => {
       },
       xaxis: {
         labels: {
-          rotate: -45
+          rotate: -45,
         },
-        categories: ['Apples', 'Oranges', 'Strawberries', 'Pineapples', 'Mangoes', 'Bananas',
-          'Blackberries', 'Pears', 'Watermelons', 'Cherries', 'Pomegranates', 'Tangerines', 'Papayas'
-        ],
-        tickPlacement: 'on'
+        categories: mesesNombre,
+        tickPlacement: 'on',
       },
       yaxis: {
         title: {
@@ -86,6 +97,52 @@ const Bar = (chartData) => {
       />
     </div>
   )
+}
+
+const cambiarMeses = (meses) => {
+  let ret = [];
+  meses.forEach(element => {
+    let e = '';
+    if (element === 0) {
+      e = 'Enero';
+    }
+    else if (element === 1) {
+      e = 'Febrero';
+    }
+    else if (element === 2) {
+      e = 'Marzo';
+    }
+    else if (element === 3) {
+      e = 'Abril';
+    }
+    else if (element === 4) {
+      e = 'Mayo';
+    }
+    else if (element === 5) {
+      e = 'Junio';
+    }
+    else if (element === 6) {
+      e = 'Julio';
+    }
+    else if (element === 7) {
+      e = 'Agosto';
+    }
+    else if (element === 8) {
+      e = 'Septiembre';
+    }
+    else if (element === 9) {
+      e = 'Octubre';
+    }
+    else if (element === 10) {
+      e = 'Noviembre';
+    }
+    else if (element === 11) {
+      e = 'Diciembre';
+    }
+    ret.push(e);
+  });
+
+  return ret;
 }
 
 export default Bar
