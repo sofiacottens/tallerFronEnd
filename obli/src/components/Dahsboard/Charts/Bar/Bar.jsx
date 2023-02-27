@@ -1,11 +1,6 @@
 import ReactApexChart from 'react-apexcharts'
 
 const Bar = (chartData) => {
-  let meses = [];
-  let fecha = new Date();
-  let mesActual = fecha.getMonth();
-  console.log(mesActual);
-  meses.push(mesActual);
 
   const data = {
     series: [{
@@ -36,7 +31,7 @@ const Bar = (chartData) => {
         enabled: false
       },
       stroke: {
-        width: 2
+        width: 1
       },
 
       grid: {
@@ -46,12 +41,10 @@ const Bar = (chartData) => {
       },
       xaxis: {
         labels: {
-          rotate: -45
+          rotate: -45,
         },
-        categories: ['Apples', 'Oranges', 'Strawberries', 'Pineapples', 'Mangoes', 'Bananas',
-          'Blackberries', 'Pears', 'Watermelons', 'Cherries', 'Pomegranates', 'Tangerines', 'Papayas'
-        ],
-        tickPlacement: 'on'
+        categories: [],
+        tickPlacement: 'on',
       },
       yaxis: {
         title: {
