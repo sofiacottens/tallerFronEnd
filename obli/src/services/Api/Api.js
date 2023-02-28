@@ -133,7 +133,8 @@ const ciudad = async (idDepartamento) => {
   }
 };
 
-const agregarMovimiento = async (data, auth, idUsuario) => { 
+const agregarMovimiento = async (data, auth, id) => { 
+  console.log(data.idUsuario, id, data.fecha, auth)
   const response = await fetch(`${BASE_URL}/movimientos.php`, {
     method: 'POST',
     headers: {
@@ -142,7 +143,8 @@ const agregarMovimiento = async (data, auth, idUsuario) => {
 
     },
     body: JSON.stringify({
-      idUsuario: idUsuario,
+  
+      idUsuario: id,
       concepto: data.concepto,
       categoria: data.categoria,
       total: data.total,

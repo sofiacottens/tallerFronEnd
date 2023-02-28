@@ -3,23 +3,29 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addMovimiento } from '../../../app/slices/movimientosSlice'
 import { agregarMovimiento, rubros } from '../../../services/Api/Api'
 import { setFilteredRubros, setRubros } from '../../../app/slices/rubrosSlice'
+import { useNavigate } from 'react-router-dom';
 
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 
 const AgregarGasto = () => {
   //Redux States
   const user = useSelector(state => state.user.loggedUser)
+
   const todosLosRubros = useSelector((state) => state.rubrosSlice.rubros);
 
   const dispatch = useDispatch();
+  const navigator = useNavigate()
+
 
   //states
 
   const [rubroFiltrado, setRubrosFil] = useState([]);
   const [medioFiltrado, setMedioFil] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
+  const [error, setError] = useState("") //Agregar
+  const [alerta, setAlerta] = useState(false) //Agregar
+
+
 
 
   //variables
@@ -33,6 +39,20 @@ const AgregarGasto = () => {
 
 
   //funciones
+
+  const showAlert = () => {
+    setAlerta(true)
+    setTimeout(() => {
+        setAlerta(false)
+    }, 1000)
+}
+  const showError = (msg) => {
+    setError(msg)
+    setTimeout(() => {
+        setError("")
+    }, 2000)
+}
+
   const changeTipo = () => {
     const valorRubro = (inputTipo.current.value)
     //console.log(`valor rubro ${valorRubro}`)
@@ -46,13 +66,15 @@ const AgregarGasto = () => {
           nombre: 'Banco',
           tipo: 'gasto'
         },]
-      dispatch(setMedioFil(mediosI))
+     
       const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro)
-      dispatch(setRubrosFil(filtradosR))
       dispatch(setFilteredRubros(filtradosR))
+      setRubrosFil(filtradosR) //CAMBIAR
+      setMedioFil(mediosI) //CAMBIAR
+
     }
     if (valorRubro == "gasto") {
-      const mediosI = [
+      const mediosR = [
         {
           nombre: 'Efectivo',
           tipo: 'gasto'
@@ -65,17 +87,13 @@ const AgregarGasto = () => {
           nombre: 'Crédito',
           tipo: 'gasto'
         },]
-      dispatch(setMedioFil(mediosI))
       const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro)
-      dispatch(setRubrosFil(filtradosR))
-      dispatch(setFilteredRubros(filtradosR))
+      setRubrosFil(filtradosR)    
+      dispatch(setFilteredRubros(filtradosR)) ///CAMBIAR
+      setMedioFil(mediosR) //CAMBIAR
+
     }
-    // const filtradosM = todosLosMedios.filter(todosM => todosM.tipo == valorRubro)
-    //console.log(`todos los medios ${filtradosM}`)
-    /*dispatch(setRubrosFil(filtradosR))
-    dispatch(setFilteredRubros(filtradosR))
-    dispatch(setMedioFil(filtradosM))
-    dispatch(setFilteredMedios(filtradosM))*/
+   
   }
 
   useEffect(() => {
@@ -97,24 +115,28 @@ const AgregarGasto = () => {
 
 
     if (total <= 0) {
-      alert("Debe ingresar un valor mayor a 0");
+      showError("Debe ingresar un valor mayor a 0");
       return;
     }
-    if (medio === null) {
-      alert("Debe elegir un medio");
+    if (medio = "sinValor") {
+      showError("Debe elegir un medio");
       return;
     }
-    if (concepto === null) {
-      alert("Debe ingresar un concepto");
+    if (concepto === "") {
+      showError("Debe ingresar un concepto");
       return;
     }
-    if (concepto === null) {
-      alert("Debe seleccionar una fecha");
+    if (total === null) {
+      showError("Debe ingresar un total");
+      return;
+    }
+    if (fecha === null) {
+      showError("Debe seleccionar una fecha");
       return;
     }
 
     const datos = {
-      idUsuario: user.id,
+      
       concepto: concepto,
       categoria: rubro,
       total: total,
@@ -123,14 +145,18 @@ const AgregarGasto = () => {
       id: null,
 
     }
-    agregarMovimiento(datos, user.apiKey, user.idUsuario)
+    agregarMovimiento(datos, user.apiKey, user.id)
       .then(data => {
         datos.id = data.idMovimiento
-        dispatch(addMovimiento(datos.movimiento));
+        console.log(`Data ${ datos.id}`)
+        dispatch(addMovimiento(datos));
         alert(data.mensaje);
-        console.log(`movimiento ${data.movimiento}`)
       }).catch(e => console.error("Ha ocurrido un error en la petición: " + e))
-
+    inputRubro.current.value = "";
+    inputMedio.current.value = "";
+    inputConcepto.current.value = "";
+    inputTotal.current.value = "";
+    inputDate.current.value = "";
 
 
   }
@@ -158,7 +184,7 @@ const AgregarGasto = () => {
             <input type="text" id="conceptoGasto" placeholder='Concepto' className="form-control my-2 my-sm-3" ref={inputConcepto} />
 
             <select className="form-control" ref={inputMedio} >
-              <option defaultValue>Seleccione el medio</option>
+              <option value="sinValor">Seleccione el medio</option>
               {medioFiltrado.map(({ nombre }) => (
                 <option key={nombre} value={nombre}>{nombre}</option>))}
             </select>
@@ -168,7 +194,13 @@ const AgregarGasto = () => {
 
             <input type="date" className="form-control" ref={inputDate}/><br />
             <button className="btn btn-primary my-2 my-sm-3" type="button" onClick={crearMovimiento} >Crear Registro</button>
-
+            {error ? (
+                    <div className='alert alert-danger' role='alert'>
+                        {error}
+                    </div>
+                ) : (
+                    ''
+                )}
           </div>
         </div>
 
