@@ -52,7 +52,7 @@ const AgregarGasto = () => {
   const changeTipo = () => {
     const valorRubro = (inputTipo.current.value)
     //console.log(`valor rubro ${valorRubro}`)
-    if (valorRubro == "ingreso") {
+    if (valorRubro === "ingreso") {
       const mediosI = [
         {
           nombre: 'Efectivo',
@@ -67,7 +67,7 @@ const AgregarGasto = () => {
       setRubrosFil(filtradosR);
       dispatch(setFilteredRubros(filtradosR));
     }
-    if (valorRubro == "gasto") {
+    if (valorRubro === "gasto") {
       const mediosR = [
         {
           nombre: 'Efectivo',

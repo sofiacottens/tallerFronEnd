@@ -18,15 +18,15 @@ const ComprarPorRubro = ({r}) => {
 
   if (ultimoMov.total > penultimoMov.total) {
     calculo = ultimoMov.total - penultimoMov.total;
-    //msg = `Para el rubro ${rub.nombre}, en la última compra has gastado $${calculo} pesos más que en la penúltima`;
+    msg = `Para el rubro ${rub.nombre}, en la última compra has gastado $${calculo} pesos más que en la penúltima`;
   }
   if (ultimoMov.total < penultimoMov.total) {
     calculo = penultimoMov.total - ultimoMov.total;
-    //msg = `Para el rubro ${rub.nombre}, en la última compra has gastado $${calculo} pesos menos que en la penúltima`;
+    msg = `Para el rubro ${rub.nombre}, en la última compra has gastado $${calculo} pesos menos que en la penúltima`;
 
   }
   if (ultimoMov.total === penultimoMov.total) {
-    //msg = `Para el rubro ${rub.nombre}, en la última compra has gastado lo mismo que en la penúltima`;
+    msg = `Para el rubro ${rub.nombre}, en la última compra has gastado lo mismo que en la penúltima`;
   }
 
   return msg;
