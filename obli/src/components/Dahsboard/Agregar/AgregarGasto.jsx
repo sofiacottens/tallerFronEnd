@@ -1,11 +1,9 @@
-import { useRef, useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { addMovimiento } from '../../../app/slices/movimientosSlice'
-import { agregarMovimiento, rubros } from '../../../services/Api/Api'
-import { setFilteredRubros, setRubros } from '../../../app/slices/rubrosSlice'
+import { useRef, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addMovimiento } from '../../../app/slices/movimientosSlice';
+import { agregarMovimiento, rubros } from '../../../services/Api/Api';
+import { setFilteredRubros, setRubros } from '../../../app/slices/rubrosSlice';
 import { useNavigate } from 'react-router-dom';
-
-import "react-datepicker/dist/react-datepicker.css";
 
 
 const AgregarGasto = () => {
@@ -26,8 +24,6 @@ const AgregarGasto = () => {
   const [alerta, setAlerta] = useState(false) //Agregar
 
 
-
-
   //variables
   const inputConcepto = useRef();
 
@@ -43,15 +39,15 @@ const AgregarGasto = () => {
   const showAlert = () => {
     setAlerta(true)
     setTimeout(() => {
-        setAlerta(false)
+      setAlerta(false)
     }, 1000)
-}
+  }
   const showError = (msg) => {
     setError(msg)
     setTimeout(() => {
-        setError("")
+      setError("")
     }, 2000)
-}
+  }
 
   const changeTipo = () => {
     const valorRubro = (inputTipo.current.value)
@@ -85,12 +81,12 @@ const AgregarGasto = () => {
           nombre: 'Crédito',
           tipo: 'gasto'
         },]
-      setMedioFil(mediosI);
+      setMedioFil(mediosR);
       const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro);
       setRubrosFil(filtradosR);
       dispatch(setFilteredRubros(filtradosR))
     }
-   
+
   }
 
   useEffect(() => {
@@ -133,7 +129,7 @@ const AgregarGasto = () => {
     }
 
     const datos = {
-      
+
       concepto: concepto,
       categoria: rubro,
       total: total,
@@ -145,7 +141,7 @@ const AgregarGasto = () => {
     agregarMovimiento(datos, user.apiKey, user.id)
       .then(data => {
         datos.id = data.idMovimiento
-        console.log(`Data ${ datos.id}`)
+        console.log(`Data ${datos.id}`)
         dispatch(addMovimiento(datos));
         alert(data.mensaje);
       }).catch(e => console.error("Ha ocurrido un error en la petición: " + e))
@@ -189,15 +185,15 @@ const AgregarGasto = () => {
             <label className="form-label my-2   " htmlFor="cantidadUnidades">Total:</label>
             <input type="number" id="total" className="form-control my-2 my-sm-3" ref={inputTotal} />
 
-            <input type="date" className="form-control" ref={inputDate}/><br />
+            <input type="date" className="form-control" ref={inputDate} /><br />
             <button className="btn btn-primary my-2 my-sm-3" type="button" onClick={crearMovimiento} >Crear Registro</button>
             {error ? (
-                    <div className='alert alert-danger' role='alert'>
-                        {error}
-                    </div>
-                ) : (
-                    ''
-                )}
+              <div className='alert alert-danger' role='alert'>
+                {error}
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         </div>
 
