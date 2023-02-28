@@ -25,7 +25,7 @@ const Rows = ({ movId, concepto, categoria, medio, total, fecha, idUsuario}) => 
   return (
     <tr>
       <td>{movId}</td>
-      <td>{concepto === undefined ? concepto : ' '}</td>
+      <td>{concepto}</td>
       <td>{categoria}</td>
       <td>{medio}</td>
       <td>{total}</td>

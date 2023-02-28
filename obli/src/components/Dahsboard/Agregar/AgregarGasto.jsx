@@ -50,10 +50,10 @@ const AgregarGasto = () => {
           nombre: 'Banco',
           tipo: 'gasto'
         },]
-      dispatch(setMedioFil(mediosI))
-      const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro)
-      dispatch(setRubrosFil(filtradosR))
-      dispatch(setFilteredRubros(filtradosR))
+      setMedioFil(mediosI);
+      const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro);
+      setRubrosFil(filtradosR);
+      dispatch(setFilteredRubros(filtradosR));
     }
     if (valorRubro == "gasto") {
       const mediosI = [
@@ -69,9 +69,9 @@ const AgregarGasto = () => {
           nombre: 'Crédito',
           tipo: 'gasto'
         },]
-      dispatch(setMedioFil(mediosI))
-      const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro)
-      dispatch(setRubrosFil(filtradosR))
+      setMedioFil(mediosI);
+      const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro);
+      setRubrosFil(filtradosR);
       dispatch(setFilteredRubros(filtradosR))
     }
     // const filtradosM = todosLosMedios.filter(todosM => todosM.tipo == valorRubro)

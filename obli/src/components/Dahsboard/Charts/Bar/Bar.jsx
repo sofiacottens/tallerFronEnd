@@ -1,11 +1,31 @@
 import ReactApexChart from 'react-apexcharts'
 
-const Bar = (chartData) => {
+const Bar = (dataChart) => {
+
+  console.log(dataChart)
+  let nuevaArrData = [];
+  let dataSerie = [];
+  let dataLabels = [];
+
+  if (dataChart !== undefined) {
+    nuevaArrData = dataChart.dataChart;
+  }
+
+  nuevaArrData.forEach(element => {
+    dataLabels.push(element.mes);
+    dataSerie.push(element.monto);
+  });
+
+  console.log(dataSerie)
+  console.log(dataLabels)
+
+  dataSerie = [...new Set(dataSerie)];
+  dataLabels = [...new Set(dataLabels)];
 
   const data = {
     series: [{
       name: 'Gasto mensual',
-      data: [44, 55, 41, 67, 22, 43, 21, 33, 45, 31, 87, 65, 35]
+      data: dataSerie
     }],
     options: {
       theme: {
@@ -43,7 +63,7 @@ const Bar = (chartData) => {
         labels: {
           rotate: -45,
         },
-        categories: [],
+        categories: dataLabels,
         tickPlacement: 'on',
       },
       yaxis: {
