@@ -2,7 +2,7 @@ import ReactApexChart from 'react-apexcharts'
 
 const Bar = (dataChart) => {
 
-  console.log(dataChart)
+  //console.log(dataChart)
   let nuevaArrData = [];
   let dataSerie = [];
   let dataLabels = [];
@@ -11,16 +11,18 @@ const Bar = (dataChart) => {
     nuevaArrData = dataChart.dataChart;
   }
 
-  nuevaArrData.forEach(element => {
-    dataLabels.push(element.mes);
+  //console.log(nuevaArrData);
+
+  let labelAnio = '';
+
+  for (let index = 0; index < nuevaArrData.length; index++) {
+    const element = nuevaArrData[index];
+    labelAnio = element.mes;
+    const strAux = (element.mes + '/' + element.anio)
     dataSerie.push(element.monto);
-  });
+    dataLabels.push(strAux);
 
-  console.log(dataSerie)
-  console.log(dataLabels)
-
-  dataSerie = [...new Set(dataSerie)];
-  dataLabels = [...new Set(dataLabels)];
+  }
 
   const data = {
     series: [{
@@ -28,6 +30,21 @@ const Bar = (dataChart) => {
       data: dataSerie
     }],
     options: {
+      annotations: {
+        points: [{
+          x: labelAnio,
+          seriesIndex: 0,
+          label: {
+            borderColor: '#775DD0',
+            offsetY: 0,
+            style: {
+              color: '#fff',
+              background: '#775DD0',
+            },
+            text: '2023',
+          }
+        }]
+      },
       theme: {
         monochrome: {
           enabled: true,

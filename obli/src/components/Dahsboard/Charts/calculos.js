@@ -9,35 +9,35 @@ const CalcularMovsXRubro = (tipo) => {
   let rubrosGastos = [];
 
   rubros.forEach(r => {
-    if(r.tipo === 'ingreso'){
-      rubrosIngresos.push(r.id);
-    }else{
-      rubrosGastos.push(r.id);
+    if (r.tipo === 'ingreso') {
+      rubrosIngresos.push({ id: r.id, nom: r.nombre });
+    } else {
+      rubrosGastos.push({ id: r.id, nom: r.nombre });
     }
   });
 
   const ingresos = movs.filter(movimiento => rubrosIngresos.includes(movimiento.categoria));
   const gastos = movs.filter(movimiento => !rubrosIngresos.includes(movimiento.categoria));
 
-  if(tipo === 'G'){
+  if (tipo === 'G') {
     rubrosGastos.forEach(rubro => {
       let suma = 0;
       gastos.forEach(gasto => {
-        if(gasto.categoria === rubro){
-          suma = suma+gasto.total;
+        if (gasto.categoria === rubro.id) {
+          suma = suma + gasto.total;
         }
       });
-      ret.push({idR: rubro, monto: suma})
+      ret.push({ idR: rubro.nom, monto: suma })
     });
   } else {
     rubrosIngresos.forEach(rubro => {
       let suma = 0;
       ingresos.forEach(i => {
-        if(i.categoria === rubro){
-          suma = suma+i.total;
+        if (i.categoria === rubro.id) {
+          suma = suma + i.total;
         }
       });
-      ret.push({idR: rubro, monto: suma})
+      ret.push({ idR: rubro.nom, monto: suma })
     });
   }
 
@@ -48,15 +48,16 @@ const CalcularMovsXRubro = (tipo) => {
 const CalculateEvolucionGastos = () => {
   let meses = [];
   let ret = [];
-  let fecha = new Date();
+  const fecha = new Date();
   let mesActual = fecha.getMonth();
   let anioActual = fecha.getFullYear();
   const movs = useSelector(state => state.movimientosSlice.filteredMovimientos);
   const rubros = useSelector(state => state.rubrosSlice.rubros);
-
+  let gastosFil = [];
   let rubrosIngresos = [];
+
   rubros.forEach(r => {
-    if(r.tipo === 'ingreso'){
+    if (r.tipo === 'ingreso') {
       rubrosIngresos.push(r.id)
     }
   });
@@ -77,24 +78,36 @@ const CalculateEvolucionGastos = () => {
     meses.push({ mes: mesActual, anio: anioActual });
   }
 
-  let mesesNombre = cambiarMeses(meses);
-  console.log(mesesNombre)
+  const mesesNombre = cambiarMeses(meses);
+  //console.log(mesesNombre)
+  //console.log(gastos);
 
-  mesesNombre.forEach(m => {
-    let suma = 0;
-    gastos.forEach(g => {
-      let fechaa = new Date(g.fecha);
-      let mesMov = fechaa.getMonth();
-      let anioMov = fechaa.getFullYear();
-      console.log(mesMov)
-      console.log(m.idMes)
-      if (mesMov === m.idMes && anioMov === m.anio) {
-        suma = suma+g.total;
-      }
-    });
-    ret.push({mes: m.mes, monto: suma})
+  gastos.forEach(g => {
+    let f = g.fecha;
+    let ff = f.slice(0, 7);
+    let fff = ff.split('-');
+    let fNumeros = fff.map(numero => parseInt(numero));
+    const mesMov = fNumeros[1];
+    const anioMov = fNumeros[0];
+    gastosFil.push({ messs: mesMov, anio: anioMov, monto: g.total });
   });
 
+  //console.log(gastosFil);
+
+  for (let index = 0; index < mesesNombre.length; index++) {
+    const m = mesesNombre[index];
+    //console.log(m);
+    let suma = 0;
+    for (let i = 0; i < gastosFil.length; i++) {
+      const gasto = gastosFil[i];
+      if (gasto.messs === m.idMes & gasto.anio === m.anio) {
+        suma = suma + gasto.monto;
+      }
+    }
+    ret.push({ mes: m.mes, monto: suma, anio: m.anio});
+  }
+
+  //console.log(ret)
   return ret;
 }
 
@@ -138,10 +151,14 @@ const cambiarMeses = (meses) => {
     else if (element.mes === 11) {
       e = 'Diciembre';
     }
-    ret.push({ idMes: element.mes, anio: element.anio, mes: e });
+
+    let mesReal = element.mes + 1;
+    ret.push({ idMes: mesReal, anio: element.anio, mes: e });
+
   });
 
   return ret;
 }
+
 
 export { CalcularMovsXRubro, CalculateEvolucionGastos };

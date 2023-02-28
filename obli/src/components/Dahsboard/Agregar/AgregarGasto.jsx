@@ -111,7 +111,7 @@ const AgregarGasto = () => {
       showError("Debe ingresar un valor mayor a 0");
       return;
     }
-    if (medio = "sinValor") {
+    if (medio === "sinValor") {
       showError("Debe elegir un medio");
       return;
     }

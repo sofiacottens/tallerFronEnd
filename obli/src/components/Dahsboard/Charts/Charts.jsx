@@ -1,4 +1,4 @@
-import Bar from './Bar'
+import Bar from './Bar/Bar'
 import Pie from './Pie'
 import { CalcularMovsXRubro, CalculateEvolucionGastos } from '../Charts/calculos'
 

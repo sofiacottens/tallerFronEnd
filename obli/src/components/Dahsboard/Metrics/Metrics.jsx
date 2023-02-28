@@ -1,16 +1,18 @@
 import { useSelector } from 'react-redux';
 import './Metrics.css';
-import { useRef, useState } from 'react';
-import { ChangeRubro } from './ComparacionPorRubro/compraracion';
+import { useRef } from 'react';
+import ChangeRubro from './ComparacionPorRubro/compraracion';
 
 const Metrics = () => {
     const rubros = useSelector(state => state.rubrosSlice.rubros);
     const inputRubro = useRef();
     let mens = '';
 
-    const _changeRubro = () => {
+    const changeRubro = () => {
         const rubroId = inputRubro.current.value;
+        console.log(rubroId); //loggea ok
         mens = ChangeRubro(rubroId);
+        console.log(mens);
     }
 
     const _mostrarMensaje = (mensaje) => {
@@ -19,19 +21,15 @@ const Metrics = () => {
 
     return (
         <>
-            <h5 className="card-title row">Comprarar movimientos por rubro</h5>
+            <h5 className="card-title row">Comprare movimientos por rubro aqui:</h5>
+            <br />
             <form className='row'>
-                <div className="card-group">
-                    <div className="card">
-                        <div className="card-body">
-                            <select className="form-control my-2 my-sm-3 " onChange={_changeRubro} ref={inputRubro}>
-                                <option value="sinValor">Seleccione rubro</option>
-                                {rubros.map(({ id, nombre }) => (
-                                    <option key={id} value={id}>{nombre}</option>))}
-                            </select>
-                        </div>
-                    </div>
-
+                <div className="card">
+                    <select className="form-control my-2 my-sm-3 " ref={inputRubro} onChange={changeRubro}>
+                        <option value="sinValor">Seleccione rubro</option>
+                        {rubros.map(({ id, nombre }) => (
+                            <option key={id} value={id}>{nombre}</option>))}
+                    </select>
                 </div>
             </form>
             <div className='container metrics'>
@@ -54,4 +52,4 @@ const Metrics = () => {
     )
 }
 
-export default Metrics
+export default Metrics;

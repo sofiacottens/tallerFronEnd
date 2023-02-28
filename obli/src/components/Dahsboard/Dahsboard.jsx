@@ -8,6 +8,7 @@ import './Dashboard.css'
 import MovimientosFilter from './Filter/MovimientosFilter'
 import Header from './Header/Header'
 import Metrics from './Metrics/Metrics'
+import Totales from './Totales/Totales'
 import TablaMovimientos from './TablaMovimientos/TablaMovimientos'
 import '../App/App.css'
 import sad from '../Dahsboard/sad.png'
@@ -26,7 +27,7 @@ const Dashboard = () => {
       })
       .catch(e => console.error('Ha ocurrido un error: ' + e))
   }, [])
-  
+
 
   return (
     <>
@@ -40,17 +41,22 @@ const Dashboard = () => {
         <div className='card-body'>
           <MovimientosFilter />
           <br />
-          {movs.length > 0 ? <TablaMovimientos /> : <><p>No se encontraron movimientos para el usuario   <img src={sad} height="27" width="40" alt=''/></p></>}
+          {movs.length > 0 ? <TablaMovimientos /> : <><p>No se encontraron movimientos para el usuario   <img src={sad} height="27" width="40" alt='' /></p></>}
         </div>
         <div className='card'>
-        <div className='card-body'>
-          <Charts/>
+          <div className='card-body'>
+            <Charts />
+          </div>
         </div>
-      </div>
+        <div className='card'>
+          <div className='card-body'>
+            <Totales />
+          </div>
+        </div>
       </div>
       <div className='card'>
         <div className='card-body'>
-          <Metrics/>
+          <Metrics />
         </div>
       </div>
     </>
