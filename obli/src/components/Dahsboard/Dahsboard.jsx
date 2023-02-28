@@ -11,6 +11,7 @@ import Header from './Header/Header'
 import TablaMovimientos from './TablaMovimientos/TablaMovimientos'
 import '../App/App.css'
 import sad from '../Dahsboard/sad.png'
+import CalculateIngresosXrubro from './ComparacionPorRubro/compraracion'
 
 const Dashboard = () => {
   const user = useSelector(state => state.user.loggedUser)
@@ -47,6 +48,11 @@ const Dashboard = () => {
           <Charts/>
         </div>
       </div>
+      </div>
+      <div className='card'>
+        <div className='card-body'>
+          <CalculateIngresosXrubro/>
+        </div>
       </div>
     </>
   )

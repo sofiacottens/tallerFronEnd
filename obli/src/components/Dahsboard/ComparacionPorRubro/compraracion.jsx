@@ -65,3 +65,5 @@ const CalculateIngresosXrubro = () => {
     ;
   
   } 
+
+  export default {CalculateIngresosXrubro}
