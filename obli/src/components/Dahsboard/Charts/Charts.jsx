@@ -1,15 +1,15 @@
 import Bar from './Bar'
 import Pie from './Pie'
-import { CalculateIngresosXrubro, CalculateGastosXrubro, CalculateEvolucionGastos } from '../Charts/calculos'
+import { CalcularMovsXRubro, CalculateEvolucionGastos } from '../Charts/calculos'
 
 const Charts = () => {
 
   const _calculateIngresosXrubro = () => {
-    return CalculateIngresosXrubro();
+    return CalcularMovsXRubro('I');
   }
 
   const _calculateGastosXrubro = () => {
-    return CalculateGastosXrubro();
+    return CalcularMovsXRubro('G');
   }
 
   const _calculateEvolucionGastos = () => {

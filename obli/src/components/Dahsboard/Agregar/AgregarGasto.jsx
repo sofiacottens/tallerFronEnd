@@ -66,12 +66,10 @@ const AgregarGasto = () => {
           nombre: 'Banco',
           tipo: 'gasto'
         },]
-     
-      const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro)
-      dispatch(setFilteredRubros(filtradosR))
-      setRubrosFil(filtradosR) //CAMBIAR
-      setMedioFil(mediosI) //CAMBIAR
-
+      setMedioFil(mediosI);
+      const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro);
+      setRubrosFil(filtradosR);
+      dispatch(setFilteredRubros(filtradosR));
     }
     if (valorRubro == "gasto") {
       const mediosR = [
@@ -87,11 +85,10 @@ const AgregarGasto = () => {
           nombre: 'Crédito',
           tipo: 'gasto'
         },]
-      const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro)
-      setRubrosFil(filtradosR)    
-      dispatch(setFilteredRubros(filtradosR)) ///CAMBIAR
-      setMedioFil(mediosR) //CAMBIAR
-
+      setMedioFil(mediosI);
+      const filtradosR = todosLosRubros.filter(todosR => todosR.tipo == valorRubro);
+      setRubrosFil(filtradosR);
+      dispatch(setFilteredRubros(filtradosR))
     }
    
   }

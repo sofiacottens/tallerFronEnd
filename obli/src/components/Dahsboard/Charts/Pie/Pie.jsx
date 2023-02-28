@@ -2,17 +2,17 @@ import ReactApexChart from 'react-apexcharts'
 
 const Pie = (dataChart) => {
 
-  let nuevaArrData = []
+  let nuevaArrData = [];
   let dataSerie = [];
   let dataLabels = [];
 
-  if(dataChart != undefined){
+  if(dataChart !== undefined){
     nuevaArrData = dataChart.dataChart;
   }
 
   nuevaArrData.forEach(element => {
     dataSerie.push(element.monto);
-    dataLabels.push(element.rubro);
+    dataLabels.push(element.idR);
   });
 
   dataSerie = [...new Set(dataSerie)];
