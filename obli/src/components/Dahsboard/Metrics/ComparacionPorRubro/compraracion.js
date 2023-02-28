@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 
-const ChangeRubro = (r) => {
+const ComprarPorRubro = ({r}) => {
+  const movs = useSelector(state => state.movimientosSlice.movimientos);
   const rubros = useSelector(state => state.rubrosSlice.rubros);
-  const movs = useSelector(state => state.movimientosSlice.filteredMovimientos);
   const filtro = movs.filter(movimiento => movimiento.categoria === r);
   const rub = rubros.filter(rub => rub.id === r);
   let msg = '';
@@ -33,4 +33,4 @@ const ChangeRubro = (r) => {
 
 }
 
-export default ChangeRubro;
+export {ComprarPorRubro};

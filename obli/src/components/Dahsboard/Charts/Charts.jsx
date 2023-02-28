@@ -22,22 +22,25 @@ const Charts = () => {
       <div className='row'>
         <div className='col-6'>
           <div className='card'>
+            <h5>Ingresos por rubro:</h5>
             <div className='card-body'>
-              <Pie dataChart={_calculateIngresosXrubro()}/>
+              <Pie dataChart={_calculateIngresosXrubro()} />
             </div>
           </div>
         </div>
         <div className='col-6'>
           <div className='card'>
+            <h5>Gastos por rubro:</h5>
             <div className='card-body'>
-              <Pie dataChart={_calculateGastosXrubro()}/>
+              <Pie dataChart={_calculateGastosXrubro()} />
             </div>
           </div>
         </div>
         <div className='col-12'>
           <div className='card'>
+            <h5>Evolucion de gastos mensuales en los ultimos dos anios:</h5>
             <div className='card-body'>
-              <Bar dataChart={_calculateEvolucionGastos()}/>
+              <Bar dataChart={_calculateEvolucionGastos()} />
             </div>
           </div>
         </div>

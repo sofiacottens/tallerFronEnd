@@ -10,13 +10,18 @@ const Pie = (dataChart) => {
     nuevaArrData = dataChart.dataChart;
   }
 
+  //console.log(nuevaArrData);
+
   nuevaArrData.forEach(element => {
     dataSerie.push(element.monto);
     dataLabels.push(element.idR);
   });
 
-  dataSerie = [...new Set(dataSerie)];
-  dataLabels = [...new Set(dataLabels)];
+  //console.log(dataSerie);
+  //console.log(dataLabels);
+
+  //dataSerie = [...new Set(dataSerie)];
+  //dataLabels = [...new Set(dataLabels)];
 
   const data = {
     series: dataSerie,

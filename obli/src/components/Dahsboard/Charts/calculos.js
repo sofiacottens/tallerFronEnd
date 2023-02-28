@@ -10,9 +10,9 @@ const CalcularMovsXRubro = (tipo) => {
 
   rubros.forEach(r => {
     if (r.tipo === 'ingreso') {
-      rubrosIngresos.push({ id: r.id, nom: r.nombre });
+      rubrosIngresos.push(r.id);
     } else {
-      rubrosGastos.push({ id: r.id, nom: r.nombre });
+      rubrosGastos.push(r.id);
     }
   });
 
@@ -23,25 +23,36 @@ const CalcularMovsXRubro = (tipo) => {
     rubrosGastos.forEach(rubro => {
       let suma = 0;
       gastos.forEach(gasto => {
-        if (gasto.categoria === rubro.id) {
+        if (gasto.categoria === rubro) {
           suma = suma + gasto.total;
         }
       });
-      ret.push({ idR: rubro.nom, monto: suma })
+      ret.push({ idR: rubro, monto: suma })
     });
   } else {
     rubrosIngresos.forEach(rubro => {
       let suma = 0;
       ingresos.forEach(i => {
-        if (i.categoria === rubro.id) {
+        if (i.categoria === rubro) {
           suma = suma + i.total;
         }
       });
-      ret.push({ idR: rubro.nom, monto: suma })
+      ret.push({ idR: rubro, monto: suma })
     });
   }
 
-  return ret;
+  let retornoNombres = [];
+  
+  ret.forEach(element => {
+    rubros.forEach(r => {
+      if(r.id === element.idR){
+        retornoNombres.push({idR: r.nombre, monto: element.monto});
+      }
+    });
+
+  });
+
+  return retornoNombres;
 }
 
 
@@ -69,7 +80,7 @@ const CalculateEvolucionGastos = () => {
     if (Math.abs(mesActual) < 12 && mesActual > 0) {
       mesActual--;
     } else {
-      mesActual = 11;
+      mesActual = 11; 
     }
     if (Math.abs(mesActual) === 11) {
       anioActual--;

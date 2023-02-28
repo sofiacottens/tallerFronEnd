@@ -16,10 +16,10 @@ const LoginForm = () => {
   const dispatch = useDispatch()
   const navigator = useNavigate()
 
-/*   const user = useSelector(state => state.user.loggedUser)
+  const user = useSelector(state => state.user.loggedUser)
   if (user) {
     return <Navigate to='/dashboard' replace={true} />
-  } */
+  }
 
   const showError = () => {
     setError(true)
@@ -67,7 +67,7 @@ const LoginForm = () => {
   return (
 
     <>
-      <h1 className="container col-3 mt-4 mb-4 mx-auto text-center"><img src={hello} alt=''/></h1>
+      <h1 className="container col-3 mt-4 mb-4 mx-auto text-center"><img src={hello} alt='' /></h1>
       <form className="container col-5">
         <div className="form-outline mb-4">
           <label className="form-label my-2 my-sm-3" htmlFor="usuarioLogin">Usuario</label>
@@ -91,8 +91,8 @@ const LoginForm = () => {
         </div>
         <div className="form-outline d-grid">
           <button className="btn" type="button" onClick={onSignInClick} disabled={btnDisabled}>
-            Login 
-           <img src={loginLogo} height="30" width="30" alt=''/>
+            Login
+            <img src={loginLogo} height="30" width="30" alt='' />
           </button>
         </div>
 

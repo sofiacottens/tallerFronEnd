@@ -1,22 +1,21 @@
 import { useSelector } from 'react-redux';
 import './Metrics.css';
-import { useRef } from 'react';
-import ChangeRubro from './ComparacionPorRubro/compraracion';
+import { useRef, useState } from 'react';
+import { ComprarPorRubro } from './ComparacionPorRubro/compraracion';
 
 const Metrics = () => {
     const rubros = useSelector(state => state.rubrosSlice.rubros);
     const inputRubro = useRef();
-    let mens = '';
+    const [mens, setMensaje] = useState('');
 
-    const changeRubro = () => {
+    const _changeRubro = () => {
         const rubroId = inputRubro.current.value;
-        console.log(rubroId); //loggea ok
-        mens = ChangeRubro(rubroId);
-        console.log(mens);
-    }
-
-    const _mostrarMensaje = (mensaje) => {
-        //mens = mensaje;
+        console.log('loggea ok'); //loggea ok
+        try {
+            setMensaje(ComprarPorRubro(rubroId));
+        } catch (error) {
+            alert(error);
+        }
     }
 
     return (
@@ -25,7 +24,7 @@ const Metrics = () => {
             <br />
             <form className='row'>
                 <div className="card">
-                    <select className="form-control my-2 my-sm-3 " ref={inputRubro} onChange={changeRubro}>
+                    <select className="form-control my-2 my-sm-3 " ref={inputRubro} onChange={_changeRubro}>
                         <option value="sinValor">Seleccione rubro</option>
                         {rubros.map(({ id, nombre }) => (
                             <option key={id} value={id}>{nombre}</option>))}
