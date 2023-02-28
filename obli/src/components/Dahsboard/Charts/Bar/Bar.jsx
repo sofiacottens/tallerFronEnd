@@ -24,6 +24,9 @@ const Bar = (dataChart) => {
 
   }
 
+  dataSerie = dataSerie.reverse();
+  dataLabels = dataLabels.reverse();
+
   const data = {
     series: [{
       name: 'Gasto mensual',

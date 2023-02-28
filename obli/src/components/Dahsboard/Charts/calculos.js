@@ -66,16 +66,16 @@ const CalculateEvolucionGastos = () => {
 
   meses.push({ mes: mesActual, anio: anioActual });
   for (let init = 1; init < 24; init++) {
-    if (mesActual < 11) {
-      mesActual++;
+    if (Math.abs(mesActual) < 12 && mesActual > 0) {
+      mesActual--;
     } else {
-      mesActual = 0;
+      mesActual = 11;
     }
-    if (mesActual === 11) {
+    if (Math.abs(mesActual) === 11) {
       anioActual--;
     }
 
-    meses.push({ mes: mesActual, anio: anioActual });
+    meses.push({ mes: Math.abs(mesActual), anio: anioActual });
   }
 
   const mesesNombre = cambiarMeses(meses);
@@ -104,7 +104,7 @@ const CalculateEvolucionGastos = () => {
         suma = suma + gasto.monto;
       }
     }
-    ret.push({ mes: m.mes, monto: suma, anio: m.anio});
+    ret.push({ mes: m.mes, monto: suma, anio: m.anio });
   }
 
   //console.log(ret)
